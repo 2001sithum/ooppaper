@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 1 - C++ Fundamentals</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h2>OOP Exam Review</h2>
+  </div>
+  <ul class="sidebar-nav">
+    <li class="main-question">
+      <a href="question1.html">Question 1</a>
+      <ul class="sub-questions">
+        <li><a href="#q1a">1 (a) - Constructor & Double Increment</a></li>
+        <li><a href="#q1b">1 (b) - Conditional Loop Logic</a></li>
+        <li><a href="#q1c">1 (c) - Pointers & Dereference</a></li>
+        <li><a href="#q1d">1 (d) - Object Instantiation</a></li>
+        <li><a href="#q1e">1 (e) - Recursion & Post-increment</a></li>
+        <li><a href="#q1f">1 (f) - Enums & Loop Side-Effects</a></li>
+      </ul>
+    </li>
+    <li class="main-question"><a href="question2.html">Question 2</a></li>
+    <li class="main-question"><a href="question3.html">Question 3</a></li>
+    <li class="main-question"><a href="question4.html">Question 4</a></li>
+    <li class="main-question"><a href="question5.html">Question 5</a></li>
+    <li class="main-question"><a href="index.html">Core Concepts Home</a></li>
+    <li class="main-question"><a href="Exam_Nov_2023_Solved.html">Exam_Nov_2023_Solved</a></li>
+
+
+
+  </ul>
+</nav>
+
+<main class="main-content">
+  <h1>Question 1: C++ Fundamentals & Syntax Analysis</h1>
+
+  <article id="q1a">
+    <h2>1 (a) - Constructor & Double Increment in Loops</h2>
+    <div class="question-box">
+      Write the output of the following program.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>Constructor:</strong> A special member function that is automatically executed when an object of a class is created. It's primarily used for initialization.</li>
+          <li><strong>For Loop Execution Order:</strong> A `for` loop `for(init; cond; update)` executes in this order: 1. `init` (once), 2. `cond` (check), 3. Loop Body, 4. `update`, 5. Go to step 2.</li>
+          <li><strong>Pre-increment (`++i`):</strong> Increments the variable's value *before* it is used in the current expression. It returns the *new* value.</li>
+          <li><strong>Post-increment (`i++`):</strong> Uses the variable's *current* value in the expression and increments it *afterwards*. The loop's update step is a separate operation.</li>
+        </ul>
+      </div>
+
+      <h3>Code Analysis</h3>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+<span class="code-keyword">class</span> CuriousAdder{
+<span class="code-keyword">public</span>:
+    CuriousAdder() {
+        <span class="code-keyword">for</span>(<span class="code-keyword">int</span> i=<span class="code-number">0</span>; i&lt;=<span class="code-number">5</span>; i++)
+            cout&lt;&lt;++i;
+    }
+};
+<span class="code-keyword">int</span> main() { CuriousAdder ca; }</code></pre>
+      </div>
+
+      <h3>Line-by-Line Execution Trace</h3>
+      <p>The core of this problem is the "double increment" of `i` within each loop cycle. One increment happens in the body (`++i`) and the other in the update expression (`i++`).</p>
+      <ol>
+        <li><strong>Initialization:</strong> The loop starts. `int i` is initialized to `0`.</li>
+        <li><strong>Cycle 1:</strong>
+          <ul>
+            <li><strong>Condition Check:</strong> `i <= 5` (0 <= 5) is true.</li>
+            <li><strong>Loop Body:</strong> `cout << ++i;`. The pre-increment `++i` changes `i` from 0 to <strong>1</strong>. This new value (1) is then printed.</li>
+            <li><strong>Update Step:</strong> `i++` is executed. `i` is incremented from 1 to <strong>2</strong>.</li>
+          </ul>
+        </li>
+        <li><strong>Cycle 2:</strong>
+          <ul>
+            <li><strong>Condition Check:</strong> `i <= 5` (2 <= 5) is true.</li>
+            <li><strong>Loop Body:</strong> `cout << ++i;`. `++i` changes `i` from 2 to <strong>3</strong>. This new value (3) is printed.</li>
+            <li><strong>Update Step:</strong> `i++` is executed. `i` is incremented from 3 to <strong>4</strong>.</li>
+          </ul>
+        </li>
+        <li><strong>Cycle 3:</strong>
+          <ul>
+            <li><strong>Condition Check:</strong> `i <= 5` (4 <= 5) is true.</li>
+            <li><strong>Loop Body:</strong> `cout << ++i;`. `++i` changes `i` from 4 to <strong>5</strong>. This new value (5) is printed.</li>
+            <li><strong>Update Step:</strong> `i++` is executed. `i` is incremented from 5 to <strong>6</strong>.</li>
+          </ul>
+        </li>
+        <li><strong>Final Check:</strong>
+          <ul>
+            <li><strong>Condition Check:</strong> `i <= 5` (6 <= 5) is now <strong>false</strong>. The loop terminates.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <h3>Final Output</h3>
+      <div class="output-box">
+        <pre>135</pre>
+      </div>
+    </div>
+  </article>
+
+  <article id="q1b">
+    <h2>1 (b) - Conditional Loop Logic</h2>
+    <div class="question-box">
+      Write the outputs for the following program when you enter "3" and "9" as inputs respectively.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>`if-else` Statement:</strong> Selects one of two blocks of code to execute based on a boolean condition.</li>
+          <li><strong>`do-while` Loop:</strong> A loop that executes its body *at least once*, and then checks the condition to decide if it should continue.</li>
+          <li><strong>`while` Loop:</strong> A loop that checks its condition *before* executing the body. The body may never execute if the condition is initially false.</li>
+        </ul>
+      </div>
+
+      <h3>Analysis for Input "3"</h3>
+      <p>When the input is `3`, the member `i` of the `mp` object is initialized to 3. The `if (i < 5)` condition is true, so the `do-while` loop executes.</p>
+      <ol>
+        <li>The `do` block starts. `cout << i++` prints the current value of `i` (which is `3`) and then increments `i` to 4.</li>
+        <li>The `while(i != 5)` condition is checked. `4 != 5` is true, so the loop repeats.</li>
+        <li>The `do` block executes again. `cout << i++` prints the current value of `i` (which is `4`) and then increments `i` to 5.</li>
+        <li>The `while(i != 5)` condition is checked. `5 != 5` is false, so the loop terminates.</li>
+      </ol>
+      <div class="output-box"><pre>3
+4</pre></div>
+
+      <h3>Analysis for Input "9"</h3>
+      <p>When the input is `9`, `i` is 9. The `if (i < 5)` condition is false, so the `else` block executes, which contains a `while` loop.</p>
+      <ol>
+        <li>The `while(i <= 10)` condition is checked. `9 <= 10` is true, so the loop body executes.</li>
+        <li>`cout << ++i` pre-increments `i` to 10 and then prints `10`.</li>
+        <li>The condition is checked again. `10 <= 10` is true.</li>
+        <li>`cout << ++i` pre-increments `i` to 11 and then prints `11`.</li>
+        <li>The condition is checked again. `11 <= 10` is false, so the loop terminates.</li>
+      </ol>
+      <div class="output-box"><pre>10
+11</pre></div>
+    </div>
+  </article>
+
+  <article id="q1c">
+    <h2>1 (c) - Pointers & Dereference Operator</h2>
+    <div class="question-box">
+      Explain the function of a dereference operator with an example.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>Pointer:</strong> A special variable that stores a memory address as its value. It "points to" the location of another variable.</li>
+          <li><strong>Address-of Operator (`&`):</strong> A unary operator that returns the memory address of a variable. Used to initialize pointers.</li>
+          <li><strong>Dereference Operator (`*`):</strong> A unary operator that, when applied to a pointer, accesses the value stored *at the memory address* the pointer holds. It is the inverse of the address-of operator.</li>
+        </ul>
+      </div>
+      <h3>Explanation</h3>
+      <p>Imagine memory as a series of numbered mailboxes. A normal variable, like `int var = 100;`, means "put the value 100 in mailbox #502". A pointer, like `int* ptr = &var;`, means "the address #502 is written on a piece of paper inside another mailbox, let's call it `ptr`".</p>
+      <p>The <strong>dereference operator (`*`)</strong> is the action of "going to the address written on the paper (`ptr`) and opening that mailbox (`#502`) to see or change its content".</p>
+      <ul>
+        <li>`ptr` gives you the address (`#502`).</li>
+        <li>`*ptr` gives you the value at that address (`100`).</li>
+      </ul>
+
+      <h3>Conceptual Diagram</h3>
+      <div class="diagram-box">
+        <svg width="500" height="150" xmlns="http://www.w3.org/2000/svg">
+          <style>.addr{font-family:monospace;font-size:11px;fill:#777;}.var-box{fill:#e3f2fd;stroke:#1565c0;}.ptr-box{fill:#fff3e0;stroke:#ef6c00;}.val{font-size:16px;font-weight:bold;}</style>
+          <text x="100" y="30" class="addr" text-anchor="middle">Address: 0x7ffc123</text>
+          <rect x="50" y="40" width="100" height="60" class="var-box" rx="5"/>
+          <text x="100" y="65" text-anchor="middle">var (int)</text>
+          <text x="100" y="85" text-anchor="middle" class="val">25</text>
+
+          <text x="350" y="30" class="addr" text-anchor="middle">Address: 0x7ffcabc</text>
+          <rect x="300" y="40" width="100" height="60" class="ptr-box" rx="5"/>
+          <text x="350" y="65" text-anchor="middle">ptr (int*)</text>
+          <text x="350" y="85" text-anchor="middle" class="val addr">0x7ffc123</text>
+
+          <path d="M 295 70 C 220 70, 220 70, 155 70" stroke="#ef6c00" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+          <text x="225" y="65" fill="#ef6c00">points to</text>
+          <text x="225" y="90" fill="#333" font-style="italic">*ptr accesses this value</text>
+        </svg>
+      </div>
+
+      <h3>Example Code with Annotations</h3>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-keyword">int</span> main() {
+    <span class="code-type">int</span> number = <span class="code-number">25</span>;
+    <span class="code-type">int</span>* ptr_to_number; <span class="code-comment">// Declare a pointer to an integer</span>
+
+    ptr_to_number = &number; <span class="code-comment">// Use '&' to get the address of 'number' and store it in the pointer</span>
+
+    std::cout &lt;&lt; <span class="code-string">"Value of 'number': "</span> &lt;&lt; number &lt;&lt; std::endl;
+    std::cout &lt;&lt; <span class="code-string">"Address of 'number': "</span> &lt;&lt; &number &lt;&lt; std::endl;
+    std::cout &lt;&lt; <span class="code-string">"Value of 'ptr_to_number' (it holds the address): "</span> &lt;&lt; ptr_to_number &lt;&lt; std::endl;
+
+    <span class="code-comment">// Use '*' to dereference the pointer and get the value it points to</span>
+    std::cout &lt;&lt; <span class="code-string">"Value pointed to by 'ptr_to_number': "</span> &lt;&lt; *ptr_to_number &lt;&lt; std::endl;
+
+    <span class="code-comment">// We can also use the dereferenced pointer to modify the original variable's value</span>
+    *ptr_to_number = <span class="code-number">100</span>;
+    std::cout &lt;&lt; <span class="code-string">"New value of 'number' after modification via pointer: "</span> &lt;&lt; number &lt;&lt; std::endl;
+
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+      </div>
+    </div>
+  </article>
+
+  <article id="q1d">
+    <h2>1 (d) - Object Instantiation and Method Calling</h2>
+    <div class="question-box">
+      Write the main() function that would create an object of the `FindArea` class and call the `area()` function in it. Use 5 and 10 as integer values.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>Object Instantiation:</strong> The process of creating an instance (an object) of a class. Syntax: `ClassName objectName(arguments);`.</li>
+          <li><strong>Member Initializer List:</strong> A more efficient way to initialize member variables in a constructor (e.g., `: a(a_val), b(b_val)`).</li>
+          <li><strong>Member Access Operator (`.`):</strong> The dot operator is used to access public members (variables or functions) of an object.</li>
+        </ul>
+      </div>
+      <h3>Solution with Full Code</h3>
+      <p>The solution requires two steps in `main()`: first, create an object of `FindArea` by passing the required values to its constructor, and second, use the dot operator to call the public `area()` method on that object.</p>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-keyword">class</span> FindArea {
+    <span class="code-type">int</span> a, b;
+<span class="code-keyword">public</span>:
+    <span class="code-comment">// Constructor with member initializer list</span>
+    FindArea(<span class="code-type">int</span> a_val, <span class="code-type">int</span> b_val) : a(a_val), b(b_val) {}
+
+    <span class="code-comment">// Public method to perform the calculation</span>
+    <span class="code-keyword">void</span> area() { cout &lt;&lt; a * b; }
+};
+
+<span class="code-comment">// The required main() function</span>
+<span class="code-keyword">int</span> main() {
+    <span class="code-comment">// 1. Instantiate an object named 'calculator', passing 5 and 10</span>
+    FindArea calculator(<span class="code-number">5</span>, <span class="code-number">10</span>);
+
+    <span class="code-comment">// 2. Call the 'area' method on the 'calculator' object</span>
+    calculator.area();
+
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+      </div>
+      <div class="output-box"><pre>50</pre></div>
+    </div>
+  </article>
+
+  <article id="q1e">
+    <h2>1 (e) - Recursion & Post-increment Nuances</h2>
+    <div class="question-box">
+      Write down the output of the following program.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>Recursion:</strong> A programming technique where a function calls itself to solve a problem.</li>
+          <li><strong>Base Case:</strong> A condition within a recursive function that stops the recursion (e.g., `if (i <= 10)`). Without a base case, recursion leads to a stack overflow.</li>
+          <li><strong>Function Arguments:</strong> Arguments are evaluated *before* being passed to a function. The post-increment `i++` affects the local variable `i` *after* its value is used in the `cout` statement.</li>
+        </ul>
+      </div>
+      <h3>Code Analysis and Trace</h3>
+      <p>This recursive function has a subtle behavior. `cout << i++` prints the current value of `i`, and *then* `i` is incremented. The recursive call `printNumbers(i + 1)` uses this newly incremented value plus one, causing the function to be called with arguments that skip numbers.</p>
+      <ul>
+        <li><b>Call 1:</b> `printNumbers(0)` is called. `0 <= 10` is true. `cout << i++` prints `0`. Local `i` becomes 1. The recursive call is `printNumbers(1 + 1)`, i.e., `printNumbers(2)`.</li>
+        <li><b>Call 2:</b> `printNumbers(2)` is called. `2 <= 10` is true. Prints `2`. Local `i` becomes 3. Calls `printNumbers(3 + 1)`, i.e., `printNumbers(4)`.</li>
+        <li><b>Call 3:</b> `printNumbers(4)` is called. `4 <= 10` is true. Prints `4`. Local `i` becomes 5. Calls `printNumbers(5 + 1)`, i.e., `printNumbers(6)`.</li>
+        <li><b>Call 4:</b> `printNumbers(6)` is called. Prints `6`. Calls `printNumbers(8)`.</li>
+        <li><b>Call 5:</b> `printNumbers(8)` is called. Prints `8`. Calls `printNumbers(10)`.</li>
+        <li><b>Call 6:</b> `printNumbers(10)` is called. `10 <= 10` is true. Prints `10`. Local `i` becomes 11. Calls `printNumbers(11 + 1)`, i.e., `printNumbers(12)`.</li>
+        <li><b>Call 7:</b> `printNumbers(12)` is called. `12 <= 10` is false. The function returns, and the recursion unwinds.</li>
+      </ul>
+      <div class="output-box"><pre>0
+2
+4
+6
+8
+10</pre></div>
+    </div>
+  </article>
+
+  <article id="q1f">
+    <h2>1 (f) - Enums & Loop Side-Effects</h2>
+    <div class="question-box">
+      Create an `enum` with the days of the week. Write down the output when the given `main()` function calls the enum you created.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>`enum` (Enumeration):</strong> A user-defined data type that consists of a set of named integer constants called enumerators.</li>
+          <li><strong>Default Enum Values:</strong> By default, the first enumerator has the value 0, the second has 1, and so on.</li>
+          <li><strong>Side Effects:</strong> When an expression modifies a state (like changing a variable's value) in addition to producing a value. `i++` has the side effect of incrementing `i`.</li>
+        </ul>
+      </div>
+      <h3>Complete Code and Analysis</h3>
+      <p>An `enum` provides meaningful names for integral constants. Here, `SUNDAY` will be `0`, `MONDAY` will be `1`, ..., and `SATURDAY` will be `6`. The `for` loop, like in question 1(a), has a double increment on the loop variable `day`.</p>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-comment">// Your enum definition</span>
+<span class="code-keyword">enum</span> Days { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY };
+
+<span class="code-keyword">int</span> main() {
+    <span class="code-comment">// SUNDAY is 0, SATURDAY is 6</span>
+    <span class="code-keyword">for</span> (<span class="code-type">int</span> day = SUNDAY; day &lt;= SATURDAY; day++)
+        cout &lt;&lt; day++ &lt;&lt; endl;
+}</code></pre>
+      </div>
+      <h3>Execution Trace</h3>
+      <ol>
+        <li><strong>Cycle 1:</strong> `day` is 0. Condition `0 <= 6` is true. `cout << day++` prints `0`, then `day` becomes 1. The loop's update `day++` then makes `day` become 2.</li>
+        <li><strong>Cycle 2:</strong> `day` is 2. Condition `2 <= 6` is true. Prints `2`, `day` becomes 3. Loop update makes `day` 4.</li>
+        <li><strong>Cycle 3:</strong> `day` is 4. Condition `4 <= 6` is true. Prints `4`, `day` becomes 5. Loop update makes `day` 6.</li>
+        <li><strong>Cycle 4:</strong> `day` is 6. Condition `6 <= 6` is true. Prints `6`, `day` becomes 7. Loop update makes `day` 8.</li>
+        <li><strong>Final Check:</strong> `day` is 8. Condition `8 <= 6` is false. The loop terminates.</li>
+      </ol>
+      <div class="output-box"><pre>0
+2
+4
+6</pre></div>
+    </div>
+  </article>
+
+</main>
+
+<script src="js/script.js"></script>
+</body>
+</html>

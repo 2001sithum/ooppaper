@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Concept: Abstraction</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<nav class="sidebar">
+  <!-- Sidebar content from index.html -->
+  <div class="sidebar-header"><h2>OOP Concepts</h2></div>
+  <ul class="sidebar-nav">
+    <li class="main-question"><a href="index.html">Home</a></li>
+    <li class="main-question"><a href="concept_inheritance.html">Inheritance</a></li>
+    <li class="main-question"><a href="concept_polymorphism.html">Polymorphism</a></li>
+    <li class="main-question"><a href="concept_encapsulation.html">Encapsulation</a></li>
+    <li class="main-question"><a href="concept_abstraction.html">Abstraction</a></li>
+    <li class="main-question"><a href="concept_static_members.html">Static Members</a></li>
+    <li class="main-question"><a href="concept_pointers_references.html">Pointers vs References</a></li>
+    <li class="main-question"><a href="Exam_Nov_2023_Solved.html">Exam_Nov_2023_Solved</a></li>
+
+  </ul>
+</nav>
+<main class="main-content">
+  <h1>Concept: Abstraction (වියුක්තිය)</h1>
+
+  <article>
+    <div class="answer-box">
+      <!-- Beginner Level -->
+      <h3><i class="fa-solid fa-seedling"></i> Beginner Level: What is Abstraction?</h3>
+      <p><strong>English:</strong> Abstraction means hiding the complex reality while exposing only the essential parts. It's about showing the "what" but not the "how".</p>
+      <p><strong>Sinhala (සිංහල):</strong> Abstraction කියන්නේ සංකීර්ණ දේවල් (ඇතුලේ වැඩ කරන විදිය) හංගලා, අවශ්‍යම දේවල් විතරක් (පාවිච්චි කරන්න ඕන දේ) පෙන්වන එක. "කොහොමද වැඩ කරන්නේ" කියන එක හංගලා "මොකක්ද කරන්නේ" කියන එක විතරක් පෙන්නනවා.</p>
+      <h4>Real-World Scenario</h4>
+      <p><strong>English:</strong> When you drive a car, you use the steering wheel, pedals, and gear stick. You don't need to know how the engine, transmission, or electronics work internally. The car's dashboard and controls are an **abstraction** that hides the complexity.</p>
+      <p><strong>Sinhala (සිංහල):</strong> ඔයා car එකක් drive කරනකොට, steering wheel එක, pedals, gear stick එක වගේ දේවල් පාවිච්චි කරනවා. Engine එක, transmission එක ඇතුලේ වැඩ කරන විදිය ගැන ඔයාට දැනගන්න අවශ්‍ය නෑ. Car එකේ dashboard එක සහ controls කියන්නේ, ඇතුලේ තියෙන සංකීර්ණ බව හංගලා තියෙන **abstraction** (වියුක්තියක්).</p>
+
+      <hr style="margin: 20px 0;">
+
+      <!-- Intermediate Level -->
+      <h3><i class="fa-solid fa-graduation-cap"></i> Intermediate Level: Abstraction in C++</h3>
+      <p>In C++, abstraction is primarily achieved in two ways:</p>
+      <ol>
+        <li><strong>Abstraction using Classes:</strong> By creating a simple public interface (public methods) for an object, we hide its complex internal logic (private members and methods). This is closely related to Encapsulation.</li>
+        <li><strong>Abstraction using Abstract Classes:</strong> By using abstract classes and pure virtual functions, we define a contract or an interface that derived classes must follow. This focuses on what an object *can do*, not how it does it.</li>
+      </ol>
+
+      <h4>Sample Code 1: Abstraction with an Abstract Class (Polymorphism)</h4>
+      <p>This example defines an abstract `Shape` class. It guarantees that any class inheriting from it *must* have a way to calculate its area, but it doesn't specify *how*. The "how" is left to the concrete classes like `Rectangle` and `Circle`. This is a classic example of abstraction enabling polymorphism.</p>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-comment">// Abstract Base Class - The "Interface" or "Contract"</span>
+<span class="code-keyword">class</span> Shape {
+<span class="code-keyword">public</span>:
+    <span class="code-keyword">virtual double</span> getArea() = <span class="code-number">0</span>; <span class="code-comment">// Pure virtual function</span>
+    <span class="code-keyword">virtual</span> ~Shape() {} <span class="code-comment">// Virtual destructor for base class</span>
+};
+
+<span class="code-comment">// Concrete Derived Class 1</span>
+<span class="code-keyword">class</span> Rectangle : <span class="code-keyword">public</span> Shape {
+<span class="code-keyword">private</span>: <span class="code-type">double</span> width, height;
+<span class="code-keyword">public</span>:
+    Rectangle(<span class="code-type">double</span> w, <span class="code-type">double</span> h) : width(w), height(h) {}
+    <span class="code-type">double</span> getArea() <span class="code-keyword">override</span> { <span class="code-keyword">return</span> width * height; }
+};
+
+<span class="code-comment">// Concrete Derived Class 2</span>
+<span class="code-keyword">class</span> Circle : <span class="code-keyword">public</span> Shape {
+<span class="code-keyword">private</span>: <span class="code-type">double</span> radius;
+<span class="code-keyword">public</span>:
+    Circle(<span class="code-type">double</span> r) : radius(r) {}
+    <span class="code-type">double</span> getArea() <span class="code-keyword">override</span> { <span class="code-keyword">return</span> <span class="code-number">3.14159</span> * radius * radius; }
+};
+
+<span class="code-keyword">void</span> printArea(Shape& shapeRef) { <span class="code-comment">// Using reference for safety</span>
+    cout &lt;&lt; <span class="code-string">"The area is: "</span> &lt;&lt; shapeRef.getArea() &lt;&lt; endl;
+}
+
+<span class="code-keyword">int</span> main() {
+    Rectangle rect(<span class="code-number">5</span>, <span class="code-number">10</span>);
+    Circle circ(<span class="code-number">7</span>);
+    printArea(rect);
+    printArea(circ);
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}
+</code></pre>
+      </div>
+
+      <hr style="margin: 20px 0;">
+
+      <h4>Sample Code 2: Abstraction by Hiding Complexity (Encapsulation)</h4>
+      <p>This example shows abstraction in a non-polymorphic way. The `SmartThermostat` class provides a very simple public interface: `setMode()`. The user doesn't need to know the complex logic inside that determines the exact temperature, fan speed, or whether to turn on heating vs. cooling. All that complexity is hidden (abstracted away).</p>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-preprocessor">#include &lt;string&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-keyword">enum</span> ThermostatMode { OFF, HEAT, COOL, AUTO };
+
+<span class="code-keyword">class</span> SmartThermostat {
+<span class="code-keyword">private</span>:
+    <span class="code-comment">// Hidden complexity: internal state and logic</span>
+    <span class="code-type">double</span> currentTemp;
+    <span class="code-type">double</span> desiredTemp;
+    ThermostatMode mode;
+
+    <span class="code-comment">// Private helper methods - not part of the public interface</span>
+    <span class="code-keyword">void</span> activateHeater() { cout &lt;&lt; <span class="code-string">"  -> Activating heater..."</span> &lt;&lt; endl; }
+    <span class="code-keyword">void</span> activateCooler() { cout &lt;&lt; <span class="code-string">"  -> Activating air conditioner..."</span> &lt;&lt; endl; }
+    <span class="code-keyword">void</span> setFanSpeed(<span class="code-type">int</span> speed) { cout &lt;&lt; <span class="code-string">"  -> Setting fan speed to "</span> &lt;&lt; speed &lt;&lt; endl; }
+
+<span class="code-keyword">public</span>:
+    SmartThermostat() : currentTemp(<span class="code-number">22.0</span>), desiredTemp(<span class="code-number">21.0</span>), mode(OFF) {}
+
+    <span class="code-comment">// The ABSTRACTION: A very simple public interface</span>
+    <span class="code-keyword">void</span> setMode(ThermostatMode newMode) {
+        cout &lt;&lt; <span class="code-string">"User set mode to "</span> &lt;&lt; newMode &lt;&lt; <span class="code-string">". Processing..."</span> &lt;&lt; endl;
+        this->mode = newMode;
+
+        <span class="code-comment">// All this logic is hidden from the user</span>
+        <span class="code-keyword">switch</span>(mode) {
+            <span class="code-keyword">case</span> HEAT:
+                activateHeater();
+                setFanSpeed(<span class="code-number">2</span>);
+                <span class="code-keyword">break</span>;
+            <span class="code-keyword">case</span> COOL:
+                activateCooler();
+                setFanSpeed(<span class="code-number">3</span>);
+                <span class="code-keyword">break</span>;
+            <span class="code-keyword">case</span> AUTO:
+                <span class="code-keyword">if</span> (currentTemp > desiredTemp) {
+                    activateCooler();
+                    setFanSpeed(<span class="code-number">1</span>);
+                } <span class="code-keyword">else</span> {
+                    activateHeater();
+                    setFanSpeed(<span class="code-number">1</span>);
+                }
+                <span class="code-keyword">break</span>;
+            <span class="code-keyword">default</span>:
+                cout &lt;&lt; <span class="code-string">"  -> Turning system off."</span> &lt;&lt; endl;
+        }
+    }
+};
+
+<span class="code-keyword">int</span> main() {
+    SmartThermostat homeSystem;
+
+    <span class="code-comment">// The user interacts with the simple, abstracted interface.</span>
+    <span class="code-comment">// They don't need to know about fan speeds or heater/cooler activation.</span>
+    homeSystem.setMode(COOL);
+    cout &lt;&lt; <span class="code-string">"-----------------"</span> &lt;&lt; endl;
+    homeSystem.setMode(AUTO);
+
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}
+</code></pre>
+      </div>
+
+      <hr style="margin: 20px 0;">
+
+      <!-- Advanced Level -->
+      <h3><i class="fa-solid fa-rocket"></i> Advanced Level: Why is Abstraction Essential?</h3>
+      <ul>
+        <li><strong>Reduces Complexity:</strong> It allows us to manage large, complex systems by breaking them down into smaller, manageable, and understandable components. We can work with an object's interface without needing to understand its internal complexity.</li>
+        <li><strong>Increases Reusability:</strong> Abstract classes define common interfaces that can be reused across different parts of an application, or even in different applications.</li>
+        <li><strong>Improves Maintainability:</strong> The internal implementation of a class can be changed without affecting any of the code that uses it, as long as the public interface (the abstraction) remains the same. This is crucial for long-term software maintenance and evolution.</li>
+        <li><strong>Enables Loose Coupling:</strong> Abstraction helps in decoupling the code that uses a class from the class's implementation. The `printArea` function above is a perfect example; it works with any `Shape` without being tightly coupled to `Rectangle` or `Circle`.</li>
+      </ul>
+    </div>
+  </article>
+</main>
+<script src="js/script.js"></script>
+</body>
+</html>

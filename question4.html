@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 4 - Advanced Class Features</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h2>OOP Exam Review</h2>
+  </div>
+  <ul class="sidebar-nav">
+    <li class="main-question"><a href="question1.html">Question 1</a></li>
+    <li class="main-question"><a href="question2.html">Question 2</a></li>
+    <li class="main-question"><a href="question3.html">Question 3</a></li>
+    <li class="main-question">
+      <a href="question4.html">Question 4</a>
+      <ul class="sub-questions">
+        <li><a href="#q4a">4 (a) - Overloading vs. Overriding</a></li>
+        <li><a href="#q4b">4 (b) - Protected Inheritance</a></li>
+        <li><a href="#q4c">4 (c) - Class Implementation & Copying</a></li>
+        <li><a href="#q4d">4 (d) - Friend Functions</a></li>
+        <li><a href="#q4e">4 (e) - Operator Overloading</a></li>
+        <li><a href="#q4f">4 (f) - Loop Control Output</a></li>
+      </ul>
+    </li>
+    <li class="main-question"><a href="question5.html">Question 5</a></li>
+    <li class="main-question"><a href="index.html">Core Concepts Home</a></li>
+    <li class="main-question"><a href="Exam_Nov_2023_Solved.html">Exam_Nov_2023_Solved</a></li>
+
+  </ul>
+</nav>
+
+<main class="main-content">
+  <h1>Question 4: Advanced Class Features & Relationships</h1>
+
+  <article id="q4a">
+    <h2>4 (a) - Overloading vs. Overriding</h2>
+    <div class="question-box">
+      Describe the differences between overloading and overriding functions in C++.
+    </div>
+    <div class="answer-box">
+      <p>Function overloading and function overriding are two key polymorphism concepts in C++, but they operate in fundamentally different ways. Overloading is resolved at compile-time, while overriding is resolved at run-time.</p>
+
+      <h3>Comparison Table</h3>
+      <table>
+        <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Function Overloading (Compile-Time)</th>
+          <th>Function Overriding (Run-Time)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong>Scope</strong></td>
+          <td>Occurs within the <strong>same class</strong>.</td>
+          <td>Occurs between a <strong>base class and a derived class</strong>.</td>
+        </tr>
+        <tr>
+          <td><strong>Function Signature</strong></td>
+          <td>Functions must have the <strong>same name</strong> but <strong>different parameters</strong>.</td>
+          <td>Functions must have the <strong>exact same name and parameters</strong>.</td>
+        </tr>
+        <tr>
+          <td><strong>Purpose</strong></td>
+          <td>To provide multiple ways to perform a similar operation with different inputs.</td>
+          <td>To allow a derived class to provide a specialized implementation of a base class function.</td>
+        </tr>
+        <tr>
+          <td><strong>Keywords</strong></td>
+          <td>No special keywords required.</td>
+          <td>The base class function must be marked <strong>`virtual`</strong>. Best practice to use <strong>`override`</strong> in the derived class.</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h3>Code Example: Demonstrating Both</h3>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-comment">// --- Overriding Example ---</span>
+<span class="code-keyword">class</span> Animal {
+<span class="code-keyword">public</span>:
+    <span class="code-keyword">virtual void</span> makeSound() { cout &lt;&lt; <span class="code-string">"Generic Animal Sound"</span> &lt;&lt; endl; }
+};
+<span class="code-keyword">class</span> Dog : <span class="code-keyword">public</span> Animal {
+<span class="code-keyword">public</span>:
+    <span class="code-keyword">void</span> makeSound() <span class="code-keyword">override</span> { cout &lt;&lt; <span class="code-string">"Woof!"</span> &lt;&lt; endl; }
+};
+
+<span class="code-comment">// --- Overloading Example ---</span>
+<span class="code-keyword">class</span> Printer {
+<span class="code-keyword">public</span>:
+    <span class="code-keyword">void</span> print(<span class="code-type">int</span> i) { cout &lt;&lt; <span class="code-string">"Printing an integer: "</span> &lt;&lt; i &lt;&lt; endl; }
+    <span class="code-keyword">void</span> print(<span class="code-type">double</span> d) { cout &lt;&lt; <span class="code-string">"Printing a double: "</span> &lt;&lt; d &lt;&lt; endl; }
+};
+
+<span class="code-keyword">int</span> main() {
+    cout &lt;&lt; <span class="code-string">"--- Overriding Demo ---"</span> &lt;&lt; endl;
+    Animal* pAnimal = <span class="code-keyword">new</span> Dog();
+    pAnimal->makeSound(); <span class="code-comment">// At runtime, this calls Dog::makeSound()</span>
+    <span class="code-keyword">delete</span> pAnimal;
+
+    cout &lt;&lt; <span class="code-string">"\n--- Overloading Demo ---"</span> &lt;&lt; endl;
+    Printer myPrinter;
+    myPrinter.print(<span class="code-number">100</span>);      <span class="code-comment">// Compiler chooses the int version</span>
+    myPrinter.print(<span class="code-number">3.14</span>);    <span class="code-comment">// Compiler chooses the double version</span>
+
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}
+</code></pre>
+      </div>
+    </div>
+  </article>
+
+  <article id="q4b">
+    <h2>4 (b) - Protected Inheritance</h2>
+    <div class="question-box">
+      Describe what happens to base class members when protected inheritance is used.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>Access Specifiers:</strong> `public`, `protected`, and `private` keywords that control the visibility of class members.</li>
+          <li><strong>Inheritance Modes:</strong> When deriving a class, you can specify `public`, `protected`, or `private` inheritance, which changes the access level of inherited members in the derived class.</li>
+        </ul>
+      </div>
+      <h3>How `protected` Inheritance Works</h3>
+      <p>When you use `protected` inheritance (e.g., `class Derived : protected Base;`), the access specifiers of the members inherited from the base class are modified as follows within the context of the derived class:</p>
+      <ul>
+        <li>Base class <strong>`public`</strong> members become <strong>`protected`</strong> in the derived class.</li>
+        <li>Base class <strong>`protected`</strong> members remain <strong>`protected`</strong> in the derived class.</li>
+        <li>Base class <strong>`private`</strong> members are <strong>inaccessible</strong>.</li>
+      </ul>
+      <p>The key takeaway is that `protected` inheritance makes all inherited members accessible only to the derived class and any further derived classes, but not to the outside world.</p>
+
+      <h3>Diagram: Access Specifier Transformation</h3>
+      <div class="diagram-box">
+        <svg width="500" height="200" xmlns="http://www.w3.org/2000/svg">
+          <style>.cls-box{fill:#fff;stroke:#555;}.cls-label{font-weight:bold;}.code-font{font-family:monospace;}</style>
+          <rect x="20" y="50" width="150" height="100" class="cls-box" rx="5"/>
+          <text x="95" y="40" class="cls-label" text-anchor="middle">Base Class</text>
+          <text x="30" y="80" class="code-font">public: pub_mem</text>
+          <text x="30" y="100" class="code-font">protected: prot_mem</text>
+          <text x="30" y="120" class="code-font">private: priv_mem</text>
+          <rect x="330" y="50" width="150" height="100" class="cls-box" rx="5"/>
+          <text x="405" y="40" class="cls-label" text-anchor="middle">Derived Class</text>
+          <text x="340" y="80" class="code-font">protected: pub_mem</text>
+          <text x="340" y="100" class="code-font">protected: prot_mem</text>
+          <text x="340" y="120" class="code-font" fill="red">(inaccessible)</text>
+          <path d="M 175 100 L 325 100" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+          <text x="210" y="95" class="code-font">: protected Base</text>
+        </svg>
+      </div>
+    </div>
+  </article>
+
+  <article id="q4c">
+    <h2>4 (c) - Class Implementation & Object Copying</h2>
+    <div class="question-box">
+      Considering the `Temp` class, rewrite it using suitable access specifiers. Create the `main` function to create `temp1`, initialize it to 35, create a copy `temp2`, set `temp2` to 40, and write down the expected outputs.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>Encapsulation:</strong> The practice of making data members `private` and providing `public` methods (getters/setters) to interact with them.</li>
+          <li><strong>Copy Initialization:</strong> Creating an object as a copy of another (`Temp temp2 = temp1;`). This invokes the copy constructor.</li>
+          <li><strong>Value Semantics:</strong> By default, C++ objects have value semantics. When you copy an object, you get a new, independent object. Changes to the copy do not affect the original.</li>
+        </ul>
+      </div>
+      <h3>Rewritten Class and `main()` function</h3>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+<span class="code-keyword">class</span> Temp {
+<span class="code-keyword">private</span>: <span class="code-comment">// Encapsulate the data member</span>
+    <span class="code-type">double</span> celc;
+<span class="code-keyword">public</span>:  <span class="code-comment">// Provide a public interface</span>
+    Temp(<span class="code-type">double</span> temp) : celc(temp) {}
+    <span class="code-keyword">void</span> setTemp(<span class="code-type">double</span> temp) { celc = temp; }
+    <span class="code-type">double</span> getTemp() { <span class="code-keyword">return</span> celc; }
+};
+
+<span class="code-keyword">int</span> main() {
+    Temp temp1(<span class="code-number">35.0</span>);
+    Temp temp2 = temp1; <span class="code-comment">// Creates an independent copy</span>
+    temp2.setTemp(<span class="code-number">40.0</span>); <span class="code-comment">// Modifies only temp2, not temp1</span>
+
+    cout &lt;&lt; <span class="code-string">"Value of temp1: "</span> &lt;&lt; temp1.getTemp() &lt;&lt; endl;
+    cout &lt;&lt; <span class="code-string">"Value of temp2: "</span> &lt;&lt; temp2.getTemp() &lt;&lt; endl;
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}
+</code></pre>
+      </div>
+      <h3>Expected Output</h3>
+      <div class="output-box"><pre>Value of temp1: 35
+Value of temp2: 40</pre></div>
+    </div>
+  </article>
+
+  <article id="q4d">
+    <h2>4 (d) - Friend Functions</h2>
+    <div class="question-box">
+      Write a friend function `getCat()` for the following program.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>`friend` Keyword:</strong> A mechanism to grant a non-member function or another class access to the `private` and `protected` members of the class where the friend declaration is made.</li>
+          <li><strong>Breaking Encapsulation:</strong> `friend` functions intentionally break encapsulation. They should be used sparingly, only when an external function truly needs intimate access to a class's internal state.</li>
+          <li><strong>Factory Function:</strong> The `getCat` function acts as a simple factory function—its job is to create and return an instance of a class.</li>
+        </ul>
+      </div>
+      <h3>Complete Program with `friend` Function</h3>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-preprocessor">#include &lt;string&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+<span class="code-keyword">class</span> Cat {
+<span class="code-keyword">private</span>:
+    <span class="code-type">string</span> name;
+    <span class="code-type">int</span> age;
+<span class="code-keyword">public</span>:
+    Cat(<span class="code-type">string</span> name_val, <span class="code-type">int</span> age_val) : name(name_val), age(age_val) {}
+    <span class="code-keyword">void</span> sayCat() { cout &lt;&lt; <span class="code-string">"Name is "</span> &lt;&lt; name &lt;&lt; <span class="code-string">" and age is "</span> &lt;&lt; age &lt;&lt; <span class="code-string">"."</span> &lt;&lt; endl; }
+    <span class="code-comment">// The friend declaration gives getCat() access to private members.</span>
+    <span class="code-comment">// (Though in this specific case, it doesn't need it as it just uses the public constructor)</span>
+    <span class="code-keyword">friend</span> Cat getCat(<span class="code-type">string</span> name, <span class="code-type">int</span> age);
+};
+
+<span class="code-comment">// Friend function definition. Note: no 'Cat::' prefix.</span>
+Cat getCat(<span class="code-type">string</span> name, <span class="code-type">int</span> age) {
+    Cat newCat(name, age);
+    <span class="code-keyword">return</span> newCat;
+}
+
+<span class="code-keyword">int</span> main() {
+    Cat cat = getCat(<span class="code-string">"Tom"</span>, <span class="code-number">10</span>);
+    cat.sayCat();
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+      </div>
+    </div>
+  </article>
+
+  <article id="q4e">
+    <h2>4 (e) - Operator Overloading</h2>
+    <div class="question-box">
+      Complete the missing code segments for the `operator<` and `operator>` functions in the `Distance` class.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>Operator Overloading:</strong> A form of compile-time polymorphism that allows you to provide a custom implementation for C++ operators for your own classes.</li>
+          <li><strong>Syntax:</strong> Declared as a member function `ReturnType operatorOp(Parameters)` or as a non-member function.</li>
+          <li><strong>Comparison Operators:</strong> When overloading comparison operators like `<`, `>`, `==`, etc., they should typically return a `bool` and be declared as `const` member functions because they should not modify the object.</li>
+        </ul>
+      </div>
+      <h3>Completed Code</h3>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-keyword">class</span> Distance {
+    <span class="code-comment">// ... members ...</span>
+<span class="code-keyword">public</span>:
+    <span class="code-comment">// ... constructor ...</span>
+    <span class="code-keyword">bool</span> operator&lt;(<span class="code-keyword">const</span> Distance& d2) <span class="code-keyword">const</span> {
+        <span class="code-type">float</span> dist1 = feet + inches;
+        <span class="code-type">float</span> dist2 = d2.feet + d2.inches;
+        <span class="code-comment">// --- Complete the code here-section 1 ---</span>
+        <span class="code-keyword">return</span> dist1 &lt; dist2;
+    }
+    <span class="code-keyword">bool</span> operator&gt;(<span class="code-keyword">const</span> Distance& d2) <span class="code-keyword">const</span> {
+        <span class="code-type">float</span> dist1 = feet + inches;
+        <span class="code-type">float</span> dist2 = d2.feet + d2.inches;
+        <span class="code-comment">// --- Complete the code here section 2 ---</span>
+        <span class="code-keyword">return</span> dist1 &gt; dist2;
+    }
+};</code></pre>
+      </div>
+    </div>
+  </article>
+
+  <article id="q4f">
+    <h2>4 (f) - Loop Control Statements Output</h2>
+    <div class="question-box">
+      Write the output of the following program.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>`continue` Statement:</strong> Immediately ends the *current iteration* of a loop and starts the next iteration.</li>
+          <li><strong>`break` Statement:</strong> Immediately terminates the entire loop and execution continues at the first statement after the loop.</li>
+        </ul>
+      </div>
+      <h3>Execution Trace</h3>
+      <p>The function iterates through the string "OrderofthePhonix".</p>
+      <ol>
+        <li>`i=0`, char is 'O'. Not 'a' or 'e'. Prints 'O'.</li>
+        <li>`i=1`, char is 'r'. Not 'a' or 'e'. Prints 'r'.</li>
+        <li>`i=2`, char is 'd'. Not 'a' or 'e'. Prints 'd'.</li>
+        <li>`i=3`, char is 'e'. The condition `str[i] == 'e'` is true. The `break` statement is executed.</li>
+        <li>The `for` loop is terminated immediately. Nothing else is printed.</li>
+      </ol>
+      <div class="output-box"><pre>Ord</pre></div>
+    </div>
+  </article>
+</main>
+<script src="js/script.js"></script>
+</body>
+</html>

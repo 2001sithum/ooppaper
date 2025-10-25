@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concept: Encapsulation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<nav class="sidebar">
+    <!-- Sidebar content from index.html -->
+    <div class="sidebar-header"><h2>OOP Concepts</h2></div>
+    <ul class="sidebar-nav">
+        <li class="main-question"><a href="index.html">Home</a></li>
+        <li class="main-question"><a href="concept_inheritance.html">Inheritance</a></li>
+        <li class="main-question"><a href="concept_polymorphism.html">Polymorphism</a></li>
+        <li class="main-question"><a href="concept_encapsulation.html">Encapsulation</a></li>
+        <li class="main-question"><a href="concept_abstraction.html">Abstraction</a></li>
+        <li class="main-question"><a href="concept_static_members.html">Static Members</a></li>
+        <li class="main-question"><a href="concept_pointers_references.html">Pointers vs References</a></li>
+        <li class="main-question"><a href="Exam_Nov_2023_Solved.html">Exam_Nov_2023_Solved</a></li>
+
+    </ul>
+</nav>
+<main class="main-content">
+    <h1>Concept: Encapsulation (ආවරණය)</h1>
+
+    <article>
+        <div class="answer-box">
+            <!-- Beginner Level -->
+            <h3><i class="fa-solid fa-seedling"></i> Beginner Level: What is Encapsulation?</h3>
+            <p><strong>English:</strong> Encapsulation is like putting things in a capsule. It's the bundling of data (attributes) and the methods (functions) that work on that data into a single unit (a class). A key part of this is **data hiding**: protecting the data from outside interference.</p>
+            <p><strong>Sinhala (සිංහල):</strong> Encapsulation කියන්නේ capsule එකක් ඇතුලට දේවල් දානවා වගේ දෙයක්. ඒ කියන්නේ, data (ගුණාංග) සහ ඒ data එක්ක වැඩ කරන methods (ක්‍රියා) එකට එකතු කරලා, එකම unit එකක් (class එකක්) ඇතුලට දාන එක. මෙහි වැදගත්ම කොටසක් තමයි **data hiding**: ඒ කියන්නේ data ටික පිටතින් එන අනවශ්‍ය බලපෑම් වලින් ආරක්ෂා කරන එක.</p>
+
+            <h4>Real-World Scenario</h4>
+            <p><strong>English:</strong> Think of a television. You, the user, have a remote control (the public interface) with buttons like `powerOn()`, `changeChannel()`, and `increaseVolume()`. You don't have direct access to the internal electronic circuits, wires, and screen components (the private data). The plastic casing of the TV **encapsulates** all the complex parts and provides you with a simple, safe interface to interact with it.</p>
+            <p><strong>Sinhala (සිංහල):</strong> Television (TV) එකක් ගැන හිතන්න. ඔයාට TV එක control කරන්න remote control එකක් (public interface) තියෙනවා. ඒකෙ `powerOn()`, `changeChannel()`, `increaseVolume()` වගේ buttons තියෙනවා. TV එක ඇතුලේ තියෙන electronic circuits, wires වගේ දේවල් (private data) වලට ඔයාට කෙලින්ම access කරන්න බෑ. TV එකේ plastic කවරය විසින් මේ සංකීර්ණ කොටස් ඔක්කොම **encapsulate** (ආවරණය) කරලා, ඔයාට පාවිච්චි කරන්න සරල, ආරක්ෂිත interface එකක් දීලා තියෙනවා.</p>
+
+            <hr style="margin: 20px 0;">
+
+            <!-- Intermediate Level -->
+            <h3><i class="fa-solid fa-graduation-cap"></i> Intermediate Level: Implementation with Access Specifiers</h3>
+            <p>Encapsulation is implemented in C++ using **access specifiers**: `public`, `private`, and `protected`.</p>
+            <ul>
+                <li><strong>`public` members:</strong> Accessible from anywhere outside the class. This forms the object's interface.</li>
+                <li><strong>`private` members:</strong> Accessible only by member functions inside the class itself. This is used for data hiding.</li>
+                <li><strong>`protected` members:</strong> Similar to private, but also accessible by derived (child) classes.</li>
+            </ul>
+            <p>The standard practice is to make all data members `private` and provide `public` methods (called getters and setters) to access or modify them in a controlled way.</p>
+
+            <h4>Sample Code 1: A `Student` Class with Validation</h4>
+            <p>In this example, the `studentGrade` is `private`. You cannot set it to an invalid value like 'Z' directly. You must use the `setGrade` method, which contains validation logic to ensure the grade is valid. This protects the object's integrity.</p>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-preprocessor">#include &lt;string&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+<span class="code-keyword">class</span> Student {
+<span class="code-keyword">private</span>:
+    <span class="code-type">string</span> studentName;
+    <span class="code-type">char</span> studentGrade;
+<span class="code-keyword">public</span>:
+    Student(<span class="code-keyword">const</span> <span class="code-type">string</span>& name) : studentName(name), studentGrade(<span class="code-string">'F'</span>) {}
+    <span class="code-keyword">void</span> setGrade(<span class="code-type">char</span> newGrade) {
+        <span class="code-keyword">if</span> (newGrade >= <span class="code-string">'A'</span> && newGrade &lt;= <span class="code-string">'F'</span> && newGrade != <span class="code-string">'E'</span>) {
+            studentGrade = newGrade;
+        } <span class="code-keyword">else</span> {
+            cout &lt;&lt; <span class="code-string">"Error: Invalid grade."</span> &lt;&lt; endl;
+        }
+    }
+    <span class="code-type">char</span> getGrade() { <span class="code-keyword">return</span> studentGrade; }
+    <span class="code-type">string</span> getName() { <span class="code-keyword">return</span> studentName; }
+};
+<span class="code-keyword">int</span> main() {
+    Student alice(<span class="code-string">"Alice"</span>);
+    <span class="code-comment">// alice.studentGrade = 'Z'; // COMPILE ERROR! Cannot access private member.</span>
+    alice.setGrade(<span class="code-string">'X'</span>); <span class="code-comment">// Fails safely</span>
+    alice.setGrade(<span class="code-string">'A'</span>); <span class="code-comment">// Succeeds</span>
+    cout &lt;&lt; alice.getName() &lt;&lt; <span class="code-string">'s</span> grade: ' &lt;&lt; alice.getGrade() &lt;&lt; endl;
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}
+</code></pre>
+            </div>
+
+            <hr style="margin: 20px 0;">
+
+            <h4>Sample Code 2: A `Stopwatch` Class Managing State</h4>
+            <p>This example shows how encapsulation is crucial for managing an object's internal state. The `Stopwatch` has private members `isRunning` and `startTime`. The user cannot directly change these. They can only interact with the `start()` and `stop()` methods. This prevents logical errors, like stopping a watch that isn't running or getting a time from a stopped watch.</p>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-preprocessor">#include &lt;chrono&gt;</span> <span class="code-comment">// For time functions</span>
+
+<span class="code-keyword">class</span> Stopwatch {
+<span class="code-keyword">private</span>:
+    <span class="code-comment">// Internal state is completely hidden</span>
+    <span class="code-type">bool</span> isRunning;
+    std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt; startTime;
+
+<span class="code-keyword">public</span>:
+    Stopwatch() : isRunning(<span class="code-keyword">false</span>) {}
+
+    <span class="code-keyword">void</span> start() {
+        <span class="code-keyword">if</span> (!isRunning) {
+            isRunning = <span class="code-keyword">true</span>;
+            startTime = std::chrono::high_resolution_clock::now();
+            std::cout &lt;&lt; <span class="code-string">"Stopwatch started."</span> &lt;&lt; std::endl;
+        } <span class="code-keyword">else</span> {
+            std::cout &lt;&lt; <span class="code-string">"Stopwatch is already running."</span> &lt;&lt; std::endl;
+        }
+    }
+
+    <span class="code-keyword">void</span> stop() {
+        <span class="code-keyword">if</span> (isRunning) {
+            isRunning = <span class="code-keyword">false</span>;
+            std::cout &lt;&lt; <span class="code-string">"Stopwatch stopped."</span> &lt;&lt; std::endl;
+        }
+    }
+
+    <span class="code-type">double</span> getElapsedTime() {
+        <span class="code-keyword">if</span> (isRunning) {
+            <span class="code-keyword">auto</span> endTime = std::chrono::high_resolution_clock::now();
+            std::chrono::duration&lt;<span class="code-type">double</span>&gt; elapsed = endTime - startTime;
+            <span class="code-keyword">return</span> elapsed.count();
+        }
+        std::cout &lt;&lt; <span class="code-string">"Stopwatch is not running. Returning 0."</span> &lt;&lt; std::endl;
+        <span class="code-keyword">return</span> <span class="code-number">0.0</span>;
+    }
+};
+
+<span class="code-keyword">int</span> main() {
+    Stopwatch timer;
+
+    <span class="code-comment">// User interacts through the clean, public interface</span>
+    timer.start();
+
+    <span class="code-comment">// Pretend to do some work</span>
+    <span class="code-keyword">for</span>(<span class="code-type">long</span> i = <span class="code-number">0</span>; i < <span class="code-number">200000000</span>; ++i);
+
+    std::cout &lt;&lt; <span class="code-string">"Elapsed time: "</span> &lt;&lt; timer.getElapsedTime() &lt;&lt; <span class="code-string">" seconds"</span> &lt;&lt; std::endl;
+
+    timer.stop();
+
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}
+</code></pre>
+            </div>
+
+            <hr style="margin: 20px 0;">
+
+            <!-- Advanced Level -->
+            <h3><i class="fa-solid fa-rocket"></i> Advanced Level: Benefits of Encapsulation</h3>
+            <ul>
+                <li><strong>Data Integrity and Security:</strong> By hiding data and providing controlled access through methods, we can enforce validation rules and prevent the object from entering an invalid or inconsistent state.</li>
+                <li><strong>Flexibility and Maintainability:</strong> The internal implementation of a class can be changed without breaking the code that uses it. For example, we could change how `studentGrade` is stored internally (e.g., as an integer 1-5), but as long as the public `getGrade()` and `setGrade()` methods still work with characters, the external code will not be affected.</li>
+                <li><strong>Reduced Complexity:</strong> It simplifies the use of a class for other developers. They only need to know the public interface, not the complex details happening inside. This is the link between Encapsulation and Abstraction.</li>
+                <li><strong>Better Debugging:</strong> If there's a bug related to an object's state, you only need to debug the public methods that modify that state, rather than searching through the entire codebase for places where the data might have been changed directly.</li>
+            </ul>
+            <div class="key-concepts-box">
+                <h4><i class="fa-solid fa-lightbulb"></i> Encapsulation vs. Abstraction</h4>
+                <p>These two concepts are related but distinct. <strong>Encapsulation</strong> is the *mechanism* of bundling data and hiding it. <strong>Abstraction</strong> is the *design principle* of hiding complexity. Encapsulation is one of the primary ways we achieve abstraction.</p>
+                <p><strong>Sinhala (සිංහල):</strong> Encapsulation සහ Abstraction සම්බන්ධයි, ඒත් වෙනස්. <strong>Encapsulation</strong> කියන්නේ data හංගන *යාන්ත්‍රණය*. <strong>Abstraction</strong> කියන්නේ සංකීර්ණ බව හංගන *design මූලධර්මය*. Abstraction එක ලබාගන්න අපි පාවිච්චි කරන ප්‍රධාන ක්‍රමයක් තමයි Encapsulation.</p>
+            </div>
+        </div>
+    </article>
+</main>
+<script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,474 @@
+/* css/style.css - W3Schools Inspired Light Theme */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Consolas&display=swap');
+
+:root {
+    --w3-green: #04AA6D;
+    --w3-green-dark: #059862;
+    --w3-green-light: #d4edda;
+    --w3-black: #282A35;
+    --w3-white: #ffffff;
+    --w3-pink: #FFC0C7;
+    --w3-yellow: #FFF4A3;
+    --w3-blue: #D9EEE1;
+    --w3-gray-light: #f1f1f1;
+    --w3-gray-lighter: #f9f9f9;
+    --w3-gray-border: #e7e9eb;
+    --w3-text: #000000;
+    --w3-text-gray: #555555;
+    --background-color: #ffffff;
+    --sidebar-background: #282A35;
+    --sidebar-hover: #04AA6D;
+    --code-background: #f1f1f1;
+    --code-green: #04AA6D;
+    --code-pink: #e90c6a;
+    --code-blue: #0000ff;
+    --code-brown: #800000;
+    --font-primary: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-code: 'Consolas', 'Courier New', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--background-color);
+    color: var(--w3-text);
+    display: flex;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+/* --- Sidebar Navigation --- */
+.sidebar {
+    width: 240px;
+    background-color: var(--sidebar-background);
+    color: var(--w3-white);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 0;
+    z-index: 100;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #1e1f29;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--w3-green);
+    border-radius: 5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--w3-green-dark);
+}
+
+.sidebar-header {
+    padding: 20px 16px;
+    background-color: var(--w3-green);
+    text-align: left;
+}
+
+.sidebar-header h2 {
+    color: var(--w3-white);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+}
+
+.sidebar-nav .main-question > a {
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--w3-white);
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-nav .main-question > a:hover {
+    background-color: rgba(4, 170, 109, 0.2);
+    border-left-color: var(--w3-green);
+}
+
+.sidebar-nav .sub-questions {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-nav .sub-questions a {
+    padding: 10px 16px 10px 32px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    display: block;
+    transition: all 0.2s;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-nav .sub-questions a:hover {
+    background-color: rgba(4, 170, 109, 0.3);
+    color: var(--w3-white);
+}
+
+.sidebar-nav .sub-questions a.active {
+    background-color: var(--w3-green);
+    color: var(--w3-white);
+    border-left-color: var(--w3-white);
+    font-weight: 600;
+}
+
+/* --- Main Content --- */
+.main-content {
+    margin-left: 240px;
+    padding: 0;
+    width: calc(100% - 240px);
+    max-width: 1400px;
+}
+
+.main-content h1 {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--w3-text);
+    padding: 80px 40px 20px 40px;
+    margin: 0 0 0 0;
+    background-color: var(--w3-green);
+    color: var(--w3-white);
+}
+
+.main-content > *:not(h1) {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+article {
+    margin-bottom: 60px;
+    padding-top: 40px;
+}
+
+article h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--w3-text);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--w3-green);
+}
+
+/* --- Content Blocks --- */
+.question-box {
+    background-color: var(--w3-blue);
+    border-left: 4px solid var(--w3-green);
+    padding: 20px;
+    margin-bottom: 20px;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--w3-text);
+}
+
+.answer-box {
+    background-color: var(--w3-gray-lighter);
+    border: 1px solid var(--w3-gray-border);
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+.answer-box h3 {
+    font-size: 24px;
+    color: var(--w3-text);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.answer-box p {
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
+.key-concepts-box {
+    background-color: var(--w3-green-light);
+    border-left: 6px solid var(--w3-green);
+    padding: 20px 20px 20px 30px;
+    margin: 25px 0;
+}
+
+.key-concepts-box h4 {
+    margin-top: 0;
+    color: var(--w3-green-dark);
+    font-size: 20px;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.key-concepts-box ul {
+    padding-left: 20px;
+    margin: 0;
+}
+
+.key-concepts-box li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+/* --- Code Block --- */
+.code-block {
+    border: 1px solid var(--w3-gray-border);
+    margin: 20px 0;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.code-header {
+    background-color: var(--w3-black);
+    color: var(--w3-white);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-code);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.copy-btn {
+    background-color: var(--w3-green);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.copy-btn:hover {
+    background-color: var(--w3-green-dark);
+}
+
+.copy-btn:active {
+    background-color: #047a51;
+}
+
+pre {
+    background-color: var(--code-background);
+    color: var(--w3-text);
+    margin: 0;
+    padding: 20px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: var(--font-code);
+    font-size: 15px;
+    line-height: 1.5;
+    overflow-x: auto;
+}
+
+/* W3Schools Style Syntax Highlighting */
+.code-keyword { color: var(--code-blue); font-weight: bold; }
+.code-string { color: var(--code-brown); }
+.code-comment { color: var(--w3-green); font-style: italic; }
+.code-type { color: var(--code-blue); font-weight: bold; }
+.code-preprocessor { color: var(--code-pink); }
+.code-number { color: #ff0000; }
+.code-function { color: #000000; font-weight: bold; }
+
+/* --- Output & Diagram Blocks --- */
+.output-box, .diagram-box {
+    background-color: var(--w3-gray-light);
+    border: 1px solid var(--w3-gray-border);
+    border-left: 4px solid var(--w3-green);
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.output-box h4, .diagram-box h4 {
+    color: var(--w3-green-dark);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.output-box pre {
+    background: var(--w3-white);
+    color: var(--w3-text);
+    text-align: left;
+    padding: 15px;
+    border: 1px solid var(--w3-gray-border);
+    font-family: var(--font-code);
+}
+
+/* --- Note/Tip Boxes (W3Schools Style) --- */
+.note-box {
+    background-color: var(--w3-yellow);
+    border-left: 6px solid #ffeb3b;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.note-box strong {
+    color: var(--w3-text);
+    font-weight: 700;
+}
+
+.tip-box {
+    background-color: #d4edda;
+    border-left: 6px solid #4caf50;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.warning-box {
+    background-color: var(--w3-pink);
+    border-left: 6px solid #f44336;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+/* --- Tables (W3Schools Style) --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: var(--w3-white);
+    border: 1px solid var(--w3-gray-border);
+}
+
+th {
+    background-color: var(--w3-green);
+    color: var(--w3-white);
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid var(--w3-gray-border);
+}
+
+tr:hover {
+    background-color: var(--w3-gray-light);
+}
+
+/* --- Buttons (W3Schools Style) --- */
+.w3-button {
+    background-color: var(--w3-green);
+    color: var(--w3-white);
+    border: none;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    font-weight: 600;
+}
+
+.w3-button:hover {
+    background-color: var(--w3-green-dark);
+}
+
+/* --- Try It Yourself Section --- */
+.try-it-box {
+    background-color: var(--w3-green-light);
+    border: 1px solid var(--w3-green);
+    padding: 20px;
+    margin: 30px 0;
+    text-align: center;
+}
+
+.try-it-box h3 {
+    color: var(--w3-green-dark);
+    margin-bottom: 15px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+    }
+
+    .main-content h1 {
+        font-size: 36px;
+        padding: 60px 30px 20px 30px;
+    }
+
+    .main-content > *:not(h1) {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .main-content h1 {
+        font-size: 32px;
+        padding: 40px 20px 20px 20px;
+    }
+
+    .main-content > *:not(h1) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    article h2 {
+        font-size: 26px;
+    }
+}
+
+/* --- Smooth Scrolling --- */
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- Selection Styling --- */
+::selection {
+    background: var(--w3-green);
+    color: var(--w3-white);
+}
+
+/* --- Print Styles --- */
+@media print {
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+}

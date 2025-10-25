@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question 5 - Static Members & Design Patterns</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h2>OOP Exam Review</h2>
+  </div>
+  <ul class="sidebar-nav">
+    <li class="main-question"><a href="question1.html">Question 1</a></li>
+    <li class="main-question"><a href="question2.html">Question 2</a></li>
+    <li class="main-question"><a href="question3.html">Question 3</a></li>
+    <li class="main-question"><a href="question4.html">Question 4</a></li>
+    <li class="main-question">
+      <a href="question5.html">Question 5</a>
+      <ul class="sub-questions">
+        <li><a href="#q5a">5 (a) - Static Members</a></li>
+        <li><a href="#q5b">5 (b) - Scope and Output</a></li>
+        <li><a href="#q5c">5 (c) - Flowchart Implementation</a></li>
+        <li><a href="#q5d">5 (d) - Flowchart Output</a></li>
+        <li><a href="#q5e">5 (e) - Const Member Functions</a></li>
+        <li><a href="#q5f">5 (f) - Observer Design Pattern</a></li>
+      </ul>
+
+    </li>
+    <li class="main-question"><a href="concept_abstraction.html">Core Concepts Home</a></li>
+    <li class="main-question"><a href="Exam_Nov_2023_Solved.html">Exam_Nov_2023_Solved</a></li>
+
+    <li class="main-question"><a href="index.html">Core Concepts Home</a></li>
+  </ul>
+</nav>
+
+<main class="main-content">
+  <h1>Question 5: Static Members, Algorithms, and Design Patterns</h1>
+
+  <article id="q5a">
+    <h2>5 (a) - Static Class Members</h2>
+    <div class="question-box">
+      Define a class `Car` with a static variable `totalCars` to count how many cars have been created. ... Include a constructor that updates `totalCars`... Implement a static function to display the total number of cars created, and another function to print individual car details. Use appropriate access specifiers. The `main()` function is given.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>Static Member Variable:</strong> A variable that belongs to the class itself, not to any specific object instance. All objects of the class share a single copy of the static variable. It must be defined and initialized outside the class.</li>
+          <li><strong>Static Member Function:</strong> A function that belongs to the class and can be called without creating an object (`ClassName::functionName()`). It can only access other static members of the class.</li>
+          <li><strong>Object Lifetime:</strong> Static members exist for the entire duration of the program's execution.</li>
+        </ul>
+      </div>
+      <h3>Diagram: Static vs. Instance Members in Memory</h3>
+      <div class="diagram-box">
+        <svg width="600" height="250" xmlns="http://www.w3.org/2000/svg">
+          <style>.obj-mem{fill:#e3f2fd;stroke:#1565c0;}.static-mem{fill:#fff3e0;stroke:#ef6c00;}.mem-label{font-family:monospace;}</style>
+          <text x="300" y="20" font-weight="bold" text-anchor="middle">Memory Layout</text>
+          <!-- Static Memory Area -->
+          <rect x="200" y="50" width="200" height="60" class="static-mem" rx="5"/>
+          <text x="300" y="70" text-anchor="middle" font-weight="bold">Static Area</text>
+          <text x="300" y="95" text-anchor="middle" class="mem-label">Car::totalCars = 2</text>
+          <!-- Heap/Stack for Objects -->
+          <text x="100" y="140" text-anchor="middle">Object 1: car1</text>
+          <rect x="50" y="150" width="150" height="70" class="obj-mem" rx="5"/>
+          <text x="125" y="180" class="mem-label" text-anchor="middle">brand: "Toyota"<br/>model: "Vitz"</text>
+          <text x="450" y="140" text-anchor="middle">Object 2: car2</text>
+          <rect x="400" y="150" width="150" height="70" class="obj-mem" rx="5"/>
+          <text x="475" y="180" class="mem-label" text-anchor="middle">brand: "Honda"<br/>model: "Vezel"</text>
+          <path d="M 125 220 C 150 130, 400 130, 300 110" stroke="#777" stroke-dasharray="5,5" fill="none"/>
+          <path d="M 475 220 C 450 130, 200 130, 300 110" stroke="#777" stroke-dasharray="5,5" fill="none"/>
+          <text x="280" y="230" fill="#555" font-style="italic">Both objects share the single static variable</text>
+        </svg>
+      </div>
+      <h3>Complete Program Implementation</h3>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-preprocessor">#include &lt;string&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+<span class="code-keyword">class</span> Car {
+<span class="code-keyword">private</span>:
+    <span class="code-type">string</span> brand;
+    <span class="code-type">string</span> model;
+    <span class="code-keyword">static</span> <span class="code-type">int</span> totalCars;
+<span class="code-keyword">public</span>:
+    Car(<span class="code-keyword">const</span> <span class="code-type">string</span>& carBrand, <span class="code-keyword">const</span> <span class="code-type">string</span>& carModel) : brand(carBrand), model(carModel) {
+        totalCars++;
+        cout &lt;&lt; <span class="code-string">"Constructor: A "</span> &lt;&lt; brand &lt;&lt; <span class="code-string">" "</span> &lt;&lt; model &lt;&lt; <span class="code-string">" was created."</span> &lt;&lt; endl;
+    }
+    <span class="code-keyword">void</span> displayCarData() {
+        cout &lt;&lt; <span class="code-string">"Car Details: "</span> &lt;&lt; this->brand &lt;&lt; <span class="code-string">" "</span> &lt;&lt; this->model &lt;&lt; endl;
+    }
+    <span class="code-keyword">static</span> <span class="code-keyword">void</span> displayTotalCarNo() {
+        cout &lt;&lt; <span class="code-string">"Total number of cars created: "</span> &lt;&lt; totalCars &lt;&lt; endl;
+    }
+};
+<span class="code-type">int</span> Car::totalCars = <span class="code-number">0</span>; <span class="code-comment">// Initialization of static member</span>
+<span class="code-keyword">int</span> main() {
+    Car::displayTotalCarNo();
+    Car car1(<span class="code-string">"Toyota"</span>, <span class="code-string">"Vitz"</span>);
+    Car car2(<span class="code-string">"Honda"</span>, <span class="code-string">"Vezel"</span>);
+    car1.displayCarData();
+    car2.displayCarData();
+    Car::displayTotalCarNo();
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}
+</code></pre>
+      </div>
+    </div>
+  </article>
+
+  <article id="q5b">
+    <h2>5 (b) - Scope and Output Analysis</h2>
+    <div class="question-box">
+      Write down the output for the following program.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>Global Scope:</strong> A variable declared outside of all functions (`int i=5;`) is global. It can be accessed and modified from any function in the file.</li>
+          <li><strong>Local Scope:</strong> A variable declared inside a function (`int a`) is local. It only exists within that function.</li>
+          <li><strong>Pass-by-Value:</strong> When an argument is passed to a function, a *copy* of that argument is made. Changes to the parameter (`a`) inside the function do not affect the original variable (`i`) outside the function.</li>
+        </ul>
+      </div>
+      <h3>Code and Execution Trace</h3>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span></div>
+        <pre><code>int i=5; // Global variable
+int say(int a) { // 'a' is a local copy of the argument passed.
+    a = a * 5 % 7; // a becomes 25 % 7, so a is now 4.
+    cout << a << endl; // Prints 4
+    return ++a; // Pre-increments 'a' to 5, then returns 5.
+}
+void add() {
+    ++i; // Increments the GLOBAL variable 'i'.
+}
+int main() {
+    cout << say(i) << endl; // 1. say(5) is called. 2. It prints 4. 3. It returns 5. 4. main prints the returned 5.
+    add(); // add() increments global 'i' from 5 to 6.
+    cout << i << endl; // Prints the current value of global 'i', which is 6.
+}</code></pre>
+      </div>
+      <h3>Final Output</h3>
+      <div class="output-box"><pre>4
+5
+6</pre></div>
+    </div>
+  </article>
+
+  <article id="q5c">
+    <h2>5 (c) - Flowchart Implementation</h2>
+    <div class="question-box">
+      Write the C++ code segment to implement the algorithm shown by the following diagram.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>Flowchart:</strong> A visual representation of an algorithm's logic and flow.</li>
+          <li><strong>Decision Symbol (Diamond):</strong> Represents an `if` or `while` condition.</li>
+          <li><strong>Process Symbol (Rectangle):</strong> Represents an operation like an assignment or calculation.</li>
+          <li><strong>Looping:</strong> The flowchart shows nested loops. The outer loop controls `i` and the inner loop controls `k`.</li>
+        </ul>
+      </div>
+      <h3>Interpreting the Flowchart</h3>
+      <p>The flowchart is slightly ambiguous but can be interpreted as a nested loop structure. The outermost structure appears to be a loop controlling `i`. Inside it, a decision is made. If `i` is greater than 5 and less than 10, an inner loop for `k` is executed. Otherwise, `i` is just printed.</p>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+
+<span class="code-keyword">int</span> main() {
+    <span class="code-comment">// The outer loop is implied by the flow returning to the 'i' check.</span>
+    <span class="code-comment">// Let's assume it iterates from 1 to 10 for demonstration.</span>
+    <span class="code-keyword">for</span> (<span class="code-type">int</span> i = <span class="code-number">1</span>; i &lt;= <span class="code-number">10</span>; ++i) {
+        <span class="code-comment">// Decision diamond: "i < 10 && i > 5"</span>
+        <span class="code-keyword">if</span> (i > <span class="code-number">5</span> && i < <span class="code-number">10</span>) {
+            <span class="code-comment">// "True" path: Inner loop for 'k'</span>
+            <span class="code-comment">// The flowchart shows k starting at 1 and looping while k < 10.</span>
+            <span class="code-keyword">for</span> (<span class="code-type">int</span> k = <span class="code-number">1</span>; k < <span class="code-number">10</span>; ++k) {
+                std::cout &lt;&lt; k &lt;&lt; <span class="code-string">" "</span>; <span class="code-comment">// "print k"</span>
+            }
+            std::cout &lt;&lt; std::endl; <span class="code-comment">// Newline after inner loop</span>
+        } <span class="code-keyword">else</span> {
+            <span class="code-comment">// "False" path: Just print 'i'</span>
+            std::cout &lt;&lt; i &lt;&lt; std::endl; <span class="code-comment">// "print i"</span>
+        }
+    }
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}
+</code></pre>
+      </div>
+    </div>
+  </article>
+
+  <article id="q5d">
+    <h2>5 (d) - Flowchart Output</h2>
+    <div class="question-box">
+      Write the output of the program you wrote as the answer for 5(c).
+    </div>
+    <div class="answer-box">
+      <h3>Output Trace</h3>
+      <p>The code from 5(c) will execute as follows:</p>
+      <ul>
+        <li>When `i` is 1, 2, 3, 4, 5: The condition `i > 5 && i < 10` is false. The `else` block runs, printing the value of `i`.</li>
+        <li>When `i` is 6, 7, 8, 9: The condition is true. The `if` block runs, executing the inner loop which prints numbers 1 through 9.</li>
+        <li>When `i` is 10: The condition is false. The `else` block runs, printing the value of `i`.</li>
+      </ul>
+      <div class="output-box"><pre>1
+2
+3
+4
+5
+1 2 3 4 5 6 7 8 9
+1 2 3 4 5 6 7 8 9
+1 2 3 4 5 6 7 8 9
+1 2 3 4 5 6 7 8 9
+10</pre></div>
+    </div>
+  </article>
+
+  <article id="q5e">
+    <h2>5 (e) - `const` Member Functions</h2>
+    <div class="question-box">
+      Describe how the `const` keyword affects a C++ function using the given code segment as an example: `int getArea() const { ... }`
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>`const` Correctness:</strong> A programming practice of using `const` to prevent unintended modifications to data, making code safer and easier to understand.</li>
+          <li><strong>Constant Member Function:</strong> A member function that is not allowed to modify any of the non-static member variables of its class.</li>
+          <li><strong>`const` Objects:</strong> An object declared as `const` cannot have its member variables changed after construction. Only `const` member functions can be called on a `const` object.</li>
+        </ul>
+      </div>
+      <h3>Explanation of `int getArea() const`</h3>
+      <p>The `const` keyword at the end of the function declaration is a promise to the compiler and to other programmers. It makes two guarantees:</p>
+      <ol>
+        <li><strong>The function will not modify the object's state.</strong> Inside `getArea()`, any attempt to change a member variable (e.g., `length = 10;`) would result in a compilation error. This function is "read-only".</li>
+        <li><strong>The function can be called on `const` objects.</strong> If you create a `const` object, you are only allowed to call its `const` member functions. This is crucial for working with constant data.</li>
+      </ol>
+
+      <h3>Code Example</h3>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-keyword">class</span> Rectangle {
+    <span class="code-type">int</span> length, width;
+<span class="code-keyword">public</span>:
+    Rectangle(<span class="code-type">int</span> l, <span class="code-type">int</span> w) : length(l), width(w) {}
+
+    <span class="code-comment">// Non-const function (can modify the object)</span>
+    <span class="code-keyword">void</span> setLength(<span class="code-type">int</span> l) { length = l; }
+
+    <span class="code-comment">// Const member function (promises not to modify)</span>
+    <span class="code-type">int</span> getArea() <span class="code-keyword">const</span> {
+        <span class="code-comment">// length = 10; // COMPILE ERROR! Cannot modify member in a const function.</span>
+        <span class="code-keyword">return</span> length * width;
+    }
+};
+
+<span class="code-keyword">int</span> main() {
+    <span class="code-keyword">const</span> Rectangle constRect(<span class="code-number">10</span>, <span class="code-number">5</span>);
+
+    <span class="code-comment">// OK: Calling a const function on a const object</span>
+    cout &lt;&lt; <span class="code-string">"Area: "</span> &lt;&lt; constRect.getArea() &lt;&lt; endl;
+
+    <span class="code-comment">// ERROR: Cannot call a non-const function on a const object</span>
+    <span class="code-comment">// constRect.setLength(20); // COMPILE ERROR!</span>
+}</code></pre>
+      </div>
+    </div>
+  </article>
+
+  <article id="q5f">
+    <h2>5 (f) - Observer Design Pattern</h2>
+    <div class="question-box">
+      Briefly describe the usage of the Observer design pattern.
+    </div>
+    <div class="answer-box">
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+        <ul>
+          <li><strong>Design Pattern:</strong> A reusable, general solution to a commonly occurring problem in software design.</li>
+          <li><strong>Behavioral Pattern:</strong> A pattern that deals with communication between objects.</li>
+          <li><strong>Loose Coupling:</strong> A design principle where components have minimal dependency on each other, making the system more flexible.</li>
+        </ul>
+      </div>
+      <h3>Core Idea of the Observer Pattern</h3>
+      <p>The Observer pattern defines a <strong>one-to-many dependency</strong> between objects. When one object (the **Subject**) changes state, all of its dependents (the **Observers**) are notified and updated automatically. This is the foundation of event-driven programming.</p>
+
+      <h3>Diagram: The Observer Pattern Interaction</h3>
+      <div class="diagram-box">
+        <svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+          <style>.subject{fill:#e3f2fd;stroke:#1565c0;}.observer{fill:#e8f5e9;stroke:#2e7d32;}.interaction{stroke:#c62828;stroke-width:1.5;fill:none;marker-end:url(#arrow);}</style>
+          <rect x="50" y="100" width="150" height="100" class="subject" rx="10"/>
+          <text x="125" y="130" font-weight="bold" text-anchor="middle">Subject</text>
+          <text x="125" y="160" font-family="monospace" text-anchor="middle">attach(observer)</text>
+          <text x="125" y="180" font-family="monospace" text-anchor="middle">notify()</text>
+          <rect x="400" y="30" width="150" height="60" class="observer" rx="10"/><text x="475" y="55" font-weight="bold" text-anchor="middle">Observer A</text><text x="475" y="75" font-family="monospace" text-anchor="middle">update()</text>
+          <rect x="400" y="120" width="150" height="60" class="observer" rx="10"/><text x="475" y="145" font-weight="bold" text-anchor="middle">Observer B</text><text x="475" y="165" font-family="monospace" text-anchor="middle">update()</text>
+          <rect x="400" y="210" width="150" height="60" class="observer" rx="10"/><text x="475" y="235" font-weight="bold" text-anchor="middle">Observer C</text><text x="475" y="255" font-family="monospace" text-anchor="middle">update()</text>
+          <text x="290" y="80" fill="#c62828">1. State Change</text><text x="290" y="100" fill="#c62828">2. Subject calls notify()</text>
+          <path d="M 205 150 C 250 150, 350 80, 395 60" class="interaction"/><path d="M 205 150 L 395 150" class="interaction"/><path d="M 205 150 C 250 150, 350 220, 395 240" class="interaction"/>
+          <text x="320" y="175" fill="#c62828">3. Observers' update() is called</text>
+        </svg>
+      </div>
+
+      <h3>Real-World Usage</h3>
+      <ul>
+        <li><strong>Social Media:</strong> A person (Subject) posts an update. All their followers (Observers) get notified.</li>
+        <li><strong>Model-View-Controller (MVC):</strong> The Model (data) is the Subject. The Views (UI elements) are Observers. When the data changes, all views that display it are automatically updated.</li>
+        <li><strong>Event Listeners in GUIs:</strong> A button (Subject) notifies its listener objects (Observers) when a click event occurs.</li>
+      </ul>
+    </div>
+  </article>
+</main>
+
+<script src="js/script.js"></script>
+</body>
+</html>

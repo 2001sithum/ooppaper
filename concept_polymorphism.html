@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Concept: Polymorphism</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<nav class="sidebar">
+  <!-- Sidebar content from index.html -->
+  <div class="sidebar-header"><h2>OOP Concepts</h2></div>
+  <ul class="sidebar-nav">
+    <li class="main-question"><a href="index.html">Home</a></li>
+    <li class="main-question"><a href="concept_inheritance.html">Inheritance</a></li>
+    <li class="main-question"><a href="concept_polymorphism.html">Polymorphism</a></li>
+    <li class="main-question"><a href="concept_encapsulation.html">Encapsulation</a></li>
+    <li class="main-question"><a href="concept_abstraction.html">Abstraction</a></li>
+    <li class="main-question"><a href="concept_static_members.html">Static Members</a></li>
+    <li class="main-question"><a href="concept_pointers_references.html">Pointers vs References</a></li>
+    <li class="main-question"><a href="Exam_Nov_2023_Solved.html">Exam_Nov_2023_Solved</a></li>
+
+  </ul>
+</nav>
+<main class="main-content">
+  <h1>Concept: Polymorphism (බහුරූපතාව)</h1>
+
+  <article>
+    <div class="answer-box">
+      <!-- Beginner Level -->
+      <h3><i class="fa-solid fa-seedling"></i> Beginner Level: What is Polymorphism?</h3>
+      <p><strong>English:</strong> Polymorphism comes from Greek words "poly" (meaning many) and "morph" (meaning forms). In OOP, it's the ability of an object or function to take on many forms. The most common use is when a parent class reference is used to refer to a child class object, allowing the same code to work with different object types.</p>
+      <p><strong>Sinhala (සිංහල):</strong> Polymorphism කියන වචනය එන්නේ "poly" (බොහෝ) සහ "morph" (ආකාර) කියන Greek වචන වලින්. OOP වලදී, මේකෙන් කියවෙන්නේ එකම object එකකට හෝ function එකකට විවිධ ආකාර (forms) ගන්න තියෙන හැකියාව. බහුලවම පාවිච්චි වෙන්නේ, parent class pointer එකක් child class object එකකට යොමු කරලා, එකම code එකෙන් විවිධ වර්ගයේ object එක්ක වැඩ කරන්න ඉඩ දීමයි.</p>
+
+      <h4>Real-World Scenario</h4>
+      <p><strong>English:</strong> Think of a USB port. You can plug in a mouse, a keyboard, a flash drive, or a smartphone. The USB port (the interface) is the same, but the action performed depends on the device (the object) you connect. The USB port exhibits polymorphic behavior.</p>
+      <p><strong>Sinhala (සිංහල):</strong> USB port එකක් ගැන හිතන්න. ඔයාට ඒකට mouse එකක්, keyboard එකක්, pen drive එකක්, smartphone එකක් වගේ ඕන දෙයක් plug කරන්න පුලුවන්. USB port එක (interface එක) එකමයි, ඒත් ඒකෙන් වෙන ක්‍රියාව රඳා පවතින්නේ ඔයා plug කරන device (object) එක මත. USB port එක polymorphic හැසිරීමක් පෙන්නනවා.</p>
+
+      <hr style="margin: 20px 0;">
+
+      <!-- Intermediate Level -->
+      <h3><i class="fa-solid fa-graduation-cap"></i> Intermediate Level: Types of Polymorphism in C++</h3>
+      <p>C++ supports two main types of polymorphism:</p>
+
+      <h4>1. Compile-Time (Static) Polymorphism</h4>
+      <p>The decision of which function to call is made by the compiler at **compile time**. This is achieved through:</p>
+      <ul>
+        <li><strong>Function Overloading:</strong> Creating multiple functions with the same name but different parameters within the same scope. The compiler chooses the correct one based on the arguments you pass.</li>
+        <li><strong>Operator Overloading:</strong> Assigning a new meaning to an existing operator (like `+`, `-`, `<<`) for a user-defined class.</li>
+      </ul>
+      <div class="code-block">
+        <div class="code-header"><span>C++ (Function Overloading)</span></div>
+        <pre><code><span class="code-keyword">void</span> print(<span class="code-type">int</span> i) { cout &lt;&lt; <span class="code-string">"Integer: "</span> &lt;&lt; i; }
+<span class="code-keyword">void</span> print(<span class="code-type">string</span> s) { cout &lt;&lt; <span class="code-string">"String: "</span> &lt;&lt; s; }
+print(<span class="code-number">10</span>); <span class="code-comment">// Compiler picks the first version</span>
+print(<span class="code-string">"hello"</span>); <span class="code-comment">// Compiler picks the second version</span></code></pre>
+      </div>
+
+      <h4>2. Run-Time (Dynamic) Polymorphism</h4>
+      <p>The decision of which function to call is delayed until **run time**. This is achieved through:</p>
+      <ul>
+        <li><strong>Function Overriding:</strong> A derived class provides its own specific implementation of a function that is already defined in its base class.</li>
+        <li><strong>Virtual Functions:</strong> The `virtual` keyword is essential for this. It tells the compiler not to bind the function call at compile time, but to look it up at run time based on the object's actual type.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-header"><span>C++ (Function Overriding)</span></div>
+        <pre><code><span class="code-keyword">class</span> Animal { <span class="code-keyword">public: virtual void</span> makeSound() { cout &lt;&lt; <span class="code-string">"..."</span>; } };
+<span class="code-keyword">class</span> Dog : <span class="code-keyword">public</span> Animal { <span class="code-keyword">public: void</span> makeSound() <span class="code-keyword">override</span> { cout &lt;&lt; <span class="code-string">"Woof!"</span>; } };
+
+Animal* ptr = <span class="code-keyword">new</span> Dog();
+ptr->makeSound(); <span class="code-comment">// At RUN-TIME, this calls the Dog's version.</span></code></pre>
+      </div>
+
+      <hr style="margin: 20px 0;">
+
+      <!-- NEW SECTION -->
+      <h3><i class="fa-solid fa-cogs"></i> Practical Application: Polymorphism with Collections</h3>
+      <p>One of the most powerful uses of run-time polymorphism is to manage a collection of different objects that share a common base class. You can create an array or vector of base class pointers and store the addresses of various derived class objects in it. Then, you can loop through the collection and call the same virtual function on each element, and the correct version of the function will be executed for each object.</p>
+
+      <h4>Code Example: A Zoo of Animals</h4>
+      <div class="code-block">
+        <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+        <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-preprocessor">#include &lt;vector&gt;</span>
+<span class="code-preprocessor">#include &lt;memory&gt;</span> <span class="code-comment">// For std::unique_ptr</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-keyword">class</span> Animal {
+<span class="code-keyword">public</span>:
+    <span class="code-keyword">virtual void</span> makeSound() { cout &lt;&lt; <span class="code-string">"Generic animal sound"</span> &lt;&lt; endl; }
+    <span class="code-keyword">virtual</span> ~Animal() {} <span class="code-comment">// Virtual destructor is crucial!</span>
+};
+
+<span class="code-keyword">class</span> Dog : <span class="code-keyword">public</span> Animal {
+<span class="code-keyword">public</span>:
+    <span class="code-keyword">void</span> makeSound() <span class="code-keyword">override</span> { cout &lt;&lt; <span class="code-string">"Woof! Woof!"</span> &lt;&lt; endl; }
+};
+
+<span class="code-keyword">class</span> Cat : <span class="code-keyword">public</span> Animal {
+<span class="code-keyword">public</span>:
+    <span class="code-keyword">void</span> makeSound() <span class="code-keyword">override</span> { cout &lt;&lt; <span class="code-string">"Meow!"</span> &lt;&lt; endl; }
+};
+
+<span class="code-keyword">class</span> Duck : <span class="code-keyword">public</span> Animal {
+<span class="code-keyword">public</span>:
+    <span class="code-keyword">void</span> makeSound() <span class="code-keyword">override</span> { cout &lt;&lt; <span class="code-string">"Quack!"</span> &lt;&lt; endl; }
+};
+
+<span class="code-keyword">int</span> main() {
+    <span class="code-comment">// A collection of base class pointers (using modern smart pointers)</span>
+    vector&lt;unique_ptr&lt;Animal&gt;&gt; zoo;
+
+    <span class="code-comment">// Add different types of objects to the same collection</span>
+    zoo.push_back(make_unique&lt;Dog&gt;());
+    zoo.push_back(make_unique&lt;Cat&gt;());
+    zoo.push_back(make_unique&lt;Duck&gt;());
+    zoo.push_back(make_unique&lt;Dog&gt;());
+
+    cout &lt;&lt; <span class="code-string">"--- Let's hear the sounds of the zoo ---"</span> &lt;&lt; endl;
+
+    <span class="code-comment">// Loop through the collection and call the same function on each object</span>
+    <span class="code-keyword">for</span> (<span class="code-keyword">const auto</span>& animal : zoo) {
+        animal->makeSound(); <span class="code-comment">// The correct function is called for each object</span>
+    }
+
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+      </div>
+      <h4>Output of the Code</h4>
+      <div class="output-box">
+<pre>--- Let's hear the sounds of the zoo ---
+Woof! Woof!
+Meow!
+Quack!
+Woof! Woof!</pre>
+      </div>
+
+      <hr style="margin: 20px 0;">
+
+      <!-- Advanced Level -->
+      <h3><i class="fa-solid fa-rocket"></i> Advanced Level: How Run-Time Polymorphism Works (Virtual Tables)</h3>
+      <p>When a class has at least one `virtual` function, the compiler adds a hidden pointer to each object of that class, called the **virtual pointer** (or **vptr**). This `vptr` points to a static array of function pointers called the **virtual table** (or **vtable**).</p>
+      <p>The vtable contains the addresses of the virtual functions for that specific class. When you make a call like `basePtr->makeSound()`, the program follows these steps at run time:</p>
+      <ol>
+        <li>Access the object's `vptr`.</li>
+        <li>Use the `vptr` to find the class's `vtable`.</li>
+        <li>Look up the address of `makeSound()` in the `vtable`.</li>
+        <li>Call the function at that address.</li>
+      </ol>
+      <p>This mechanism, known as **dynamic dispatch**, allows the correct derived class function to be called even when using a base class pointer.</p>
+      <div class="key-concepts-box">
+        <h4><i class="fa-solid fa-triangle-exclamation"></i> Virtual Destructors</h4>
+        <p>If you plan to `delete` a derived class object through a base class pointer, the base class destructor **must** be declared `virtual`. If it is not, only the base class destructor will be called, leading to resource leaks from the derived class part of the object. This is a very common and serious bug.</p>
+      </div>
+    </div>
+  </article>
+</main>
+<script src="js/script.js"></script>
+</body>
+</html>

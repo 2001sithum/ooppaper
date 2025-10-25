@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 2 - Inheritance & Polymorphism</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<nav class="sidebar">
+    <div class="sidebar-header">
+        <h2>OOP Exam Review</h2>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="main-question"><a href="question1.html">Question 1</a></li>
+        <li class="main-question">
+            <a href="question2.html">Question 2</a>
+            <ul class="sub-questions">
+                <li><a href="#q2a">2 (a) - Abstract Classes & Inheritance</a></li>
+                <li><a href="#q2b">2 (b) - Instantiating Derived Classes</a></li>
+                <li><a href="#q2c">2 (c) - Using Structs</a></li>
+                <li><a href="#q2d">2 (d) - Output Analysis: Pointers & References</a></li>
+                <li><a href="#q2e">2 (e) - Loop Rewriting: `for` to `while`</a></li>
+            </ul>
+        </li>
+        <li class="main-question"><a href="question3.html">Question 3</a></li>
+        <li class="main-question"><a href="question4.html">Question 4</a></li>
+        <li class="main-question"><a href="question5.html">Question 5</a></li>
+        <li class="main-question"><a href="index.html">Core Concepts Home</a></li>
+        <li class="main-question"><a href="Exam_Nov_2023_Solved.html">Exam_Nov_2023_Solved</a></li>
+
+
+    </ul>
+</nav>
+
+<main class="main-content">
+    <h1>Question 2: Inheritance, Polymorphism & Data Structures</h1>
+
+    <article id="q2a">
+        <h2>2 (a) - Implementing Inheritance from an Abstract Class</h2>
+        <div class="question-box">
+            Following is an abstract class `Person`... Inherit from `Person` to create concrete derived classes `Student` and `Teacher`. The `Student` class should add a `grade` variable, and the `Teacher` class should add a `subject` variable. The overridden `getInfo()` function should print the attributes of each class.
+        </div>
+        <div class="answer-box">
+            <div class="key-concepts-box">
+                <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                <ul>
+                    <li><strong>Abstract Class:</strong> A class that cannot be instantiated on its own. It acts as a blueprint for other classes. It must have at least one pure virtual function.</li>
+                    <li><strong>Pure Virtual Function:</strong> A virtual function with no implementation, declared by appending `= 0;`. It forces derived classes to provide their own implementation.</li>
+                    <li><strong>Concrete Class:</strong> A class that can be instantiated. A class derived from an abstract class becomes concrete once it implements all of the base class's pure virtual functions.</li>
+                    <li><strong>Inheritance:</strong> The mechanism of basing an object or class upon another object or class, retaining similar implementation. This promotes code reuse.</li>
+                    <li><strong>`override` Specifier:</strong> A C++11 keyword that indicates a member function in a derived class is intended to override a virtual function from a base class. It helps catch errors at compile time if the function signatures don't match.</li>
+                </ul>
+            </div>
+
+            <h3>Theoretical Foundation: Why Use Abstract Classes?</h3>
+            <p>Abstract classes are central to polymorphism and creating flexible, extensible systems. They enforce a contract: any class that claims to be a "type of" `Person` *must* provide a way to get its information (`getInfo()`). This guarantees a common interface for a family of related classes, allowing you to treat `Student` and `Teacher` objects polymorphically through a `Person` pointer or reference, without needing to know their specific type at compile time.</p>
+
+            <h3>Class Hierarchy Diagram (UML)</h3>
+            <div class="diagram-box">
+                <svg width="450" height="280" xmlns="http://www.w.w3.org/2000/svg">
+                    <defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#fff" stroke="#333" stroke-width="1.5"></path></marker></defs>
+                    <style>.abstract{font-style:italic;}.class-box{fill:#fafafa;stroke:#555;}.prot{color:#ef6c00;}.pub{color:#2e7d32;}.priv{color:#c62828;}</style>
+                    <!-- Person Class (Abstract) -->
+                    <rect x="150" y="20" width="150" height="90" class="class-box" rx="5"/>
+                    <text x="225" y="40" text-anchor="middle" class="abstract" font-weight="bold">Person</text>
+                    <line x1="150" y1="50" x2="300" y2="50" stroke="#555"/>
+                    <text x="160" y="65" class="prot" font-family="monospace"># name: string</text>
+                    <text x="160" y="80" class="prot" font-family="monospace"># age: int</text>
+                    <line x1="150" y1="85" x2="300" y2="85" stroke="#555"/>
+                    <text x="160" y="100" class="pub abstract" font-family="monospace">+ getInfo(): void = 0</text>
+
+                    <!-- Student Class -->
+                    <rect x="20" y="170" width="180" height="90" class="class-box" rx="5"/>
+                    <text x="110" y="190" text-anchor="middle" font-weight="bold">Student</text>
+                    <line x1="20" y1="200" x2="200" y2="200" stroke="#555"/>
+                    <text x="30" y="215" class="priv" font-family="monospace">- grade: char</text>
+                    <line x1="20" y1="225" x2="200" y2="225" stroke="#555"/>
+                    <text x="30" y="245" class="pub" font-family="monospace">+ getInfo(): void</text>
+
+                    <!-- Teacher Class -->
+                    <rect x="250" y="170" width="180" height="90" class="class-box" rx="5"/>
+                    <text x="340" y="190" text-anchor="middle" font-weight="bold">Teacher</text>
+                    <line x1="250" y1="200" x2="430" y2="200" stroke="#555"/>
+                    <text x="260" y="215" class="priv" font-family="monospace">- subject: string</text>
+                    <line x1="250" y1="225" x2="430" y2="225" stroke="#555"/>
+                    <text x="260" y="245" class="pub" font-family="monospace">+ getInfo(): void</text>
+
+                    <!-- Inheritance lines -->
+                    <line x1="110" y1="170" x2="225" y2="110" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <line x1="340" y1="170" x2="225" y2="110" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                </svg>
+            </div>
+
+            <h3>Complete Implementation Code</h3>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-preprocessor">#include &lt;string&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-comment">// Abstract Base Class 'Person'</span>
+<span class="code-keyword">class</span> Person {
+<span class="code-keyword">protected</span>:
+    <span class="code-comment">// Protected members are accessible by this class and its derived classes</span>
+    <span class="code-type">string</span> name;
+    <span class="code-type">int</span> age;
+<span class="code-keyword">public</span>:
+    Person(<span class="code-keyword">const</span> <span class="code-type">string</span>& n, <span class="code-type">int</span> a) : name(n), age(a) {
+        cout &lt;&lt; <span class="code-string">"LOG: Person constructor executed."</span> &lt;&lt; endl;
+    }
+    <span class="code-keyword">virtual void</span> getInfo() <span class="code-keyword">const</span> = <span class="code-number">0</span>;
+    <span class="code-keyword">virtual</span> ~Person() {
+        cout &lt;&lt; <span class="code-string">"LOG: Person destructor executed."</span> &lt;&lt; endl;
+    }
+};
+
+<span class="code-comment">// Concrete Derived Class 'Student'</span>
+<span class="code-keyword">class</span> Student : <span class="code-keyword">public</span> Person {
+<span class="code-keyword">private</span>:
+    <span class="code-type">char</span> grade;
+<span class="code-keyword">public</span>:
+    Student(<span class="code-keyword">const</span> <span class="code-type">string</span>& n, <span class="code-type">int</span> a, <span class="code-type">char</span> g) : Person(n, a), grade(g) {
+        cout &lt;&lt; <span class="code-string">"LOG: Student constructor executed."</span> &lt;&lt; endl;
+    }
+    <span class="code-keyword">void</span> getInfo() <span class="code-keyword">const override</span> {
+        cout &lt;&lt; <span class="code-string">"--- Student Details ---\n"</span>;
+        cout &lt;&lt; <span class="code-string">"  Name:  "</span> &lt;&lt; name &lt;&lt; <span class="code-string">"\n  Age:   "</span> &lt;&lt; age &lt;&lt; <span class="code-string">"\n  Grade: "</span> &lt;&lt; grade &lt;&lt; endl;
+    }
+    ~Student() { cout &lt;&lt; <span class="code-string">"LOG: Student destructor executed."</span> &lt;&lt; endl; }
+};
+
+<span class="code-comment">// Concrete Derived Class 'Teacher'</span>
+<span class="code-keyword">class</span> Teacher : <span class="code-keyword">public</span> Person {
+<span class="code-keyword">private</span>:
+    <span class="code-type">string</span> subject;
+<span class="code-keyword">public</span>:
+    Teacher(<span class="code-keyword">const</span> <span class="code-type">string</span>& n, <span class="code-type">int</span> a, <span class="code-keyword">const</span> <span class="code-type">string</span>& s) : Person(n, a), subject(s) {
+        cout &lt;&lt; <span class="code-string">"LOG: Teacher constructor executed."</span> &lt;&lt; endl;
+    }
+    <span class="code-keyword">void</span> getInfo() <span class="code-keyword">const override</span> {
+        cout &lt;&lt; <span class="code-string">"--- Teacher Details ---\n"</span>;
+        cout &lt;&lt; <span class="code-string">"  Name:    "</span> &lt;&lt; name &lt;&lt; <span class="code-string">"\n  Age:     "</span> &lt;&lt; age &lt;&lt; <span class="code-string">"\n  Subject: "</span> &lt;&lt; subject &lt;&lt; endl;
+    }
+    ~Teacher() { cout &lt;&lt; <span class="code-string">"LOG: Teacher destructor executed."</span> &lt;&lt; endl; }
+};
+</code></pre>
+            </div>
+        </div>
+    </article>
+
+    <article id="q2b">
+        <h2>2 (b) - Instantiating and Using Derived Classes</h2>
+        <div class="question-box">
+            Write the `main()` function that creates objects of the `Student` and `Teacher` classes... and call the `getInfo()` function on each object.
+        </div>
+        <div class="answer-box">
+            <div class="key-concepts-box">
+                <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                <ul>
+                    <li><strong>Object Instantiation:</strong> The process of creating an instance (an object) of a class in memory.</li>
+                    <li><strong>Constructor Chaining:</strong> When a derived class object is created, its constructor automatically calls the constructor of its base class first. This ensures the base part is properly initialized.</li>
+                    <li><strong>Destructor Chaining:</strong> When a derived object is destroyed, the destructor chain runs in the reverse order of the constructors: derived class destructor first, then the base class destructor.</li>
+                </ul>
+            </div>
+
+            <h3>Required `main()` Function</h3>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-comment">// This main function would follow the class definitions from 2(a)</span>
+<span class="code-keyword">int</span> main() {
+    cout &lt;&lt; <span class="code-string">"--- Creating Student Object ---"</span> &lt;&lt; endl;
+    Student student1(<span class="code-string">"Akalanka"</span>, <span class="code-number">38</span>, <span class="code-string">'A'</span>);
+    cout &lt;&lt; endl;
+
+    cout &lt;&lt; <span class="code-string">"--- Creating Teacher Object ---"</span> &lt;&lt; endl;
+    Teacher teacher1(<span class="code-string">"Nishantha"</span>, <span class="code-number">50</span>, <span class="code-string">"OOP"</span>);
+    cout &lt;&lt; endl;
+
+    cout &lt;&lt; <span class="code-string">"--- Calling getInfo() Methods ---"</span> &lt;&lt; endl;
+    student1.getInfo();
+    cout &lt;&lt; endl;
+    teacher1.getInfo();
+    cout &lt;&lt; endl;
+
+    cout &lt;&lt; <span class="code-string">"--- main() is about to end, destructors will be called ---"</span> &lt;&lt; endl;
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}
+</code></pre>
+            </div>
+
+            <h3>Combined Output of 2(a) and 2(b)</h3>
+            <div class="output-box">
+<pre>--- Creating Student Object ---
+LOG: Person constructor executed.
+LOG: Student constructor executed.
+
+--- Creating Teacher Object ---
+LOG: Person constructor executed.
+LOG: Teacher constructor executed.
+
+--- Calling getInfo() Methods ---
+--- Student Details ---
+  Name:  Akalanka
+  Age:   38
+  Grade: A
+
+--- Teacher Details ---
+  Name:    Nishantha
+  Age:     50
+  Subject: OOP
+
+--- main() is about to end, destructors will be called ---
+LOG: Teacher destructor executed.
+LOG: Person destructor executed.
+LOG: Student destructor executed.
+LOG: Person destructor executed.</pre>
+            </div>
+        </div>
+    </article>
+
+    <article id="q2c">
+        <h2>2 (c) - Using Structs</h2>
+        <div class="question-box">
+            Write the `main()` function that would call the `struct book`, initialize its members, and print the values.
+        </div>
+        <div class="answer-box">
+            <div class="key-concepts-box">
+                <h4><i class="fa-solid fa-brain"></i> Key Concepts: `struct` vs. `class`</h4>
+                <ul>
+                    <li><strong>Default Access:</strong> The only real difference is default access. In a `struct`, members are `public` by default. In a `class`, members are `private` by default.</li>
+                    <li><strong>Convention/Usage:</strong> By convention, `struct`s are used for simple data aggregates (plain old data) with few or no methods. `class`es are used for complex objects with data and extensive methods, intended to model behavior and enforce invariants (rules) through encapsulation.</li>
+                </ul>
+            </div>
+
+            <h3>Complete Program with `main()`</h3>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-preprocessor">#include &lt;string&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-keyword">struct</span> book {
+    <span class="code-comment">// All these members are public by default</span>
+    <span class="code-type">int</span> bookID;
+    <span class="code-type">int</span> numOfCopies;
+    <span class="code-type">float</span> price;
+    <span class="code-type">string</span> bookName;
+};
+
+<span class="code-keyword">int</span> main() {
+    <span class="code-comment">// Create an instance of the struct</span>
+    book myBook;
+
+    <span class="code-comment">// Initialize members using the dot (.) operator</span>
+    myBook.bookID = <span class="code-number">101</span>;
+    myBook.numOfCopies = <span class="code-number">50</span>;
+    myBook.price = <span class="code-number">29.99f</span>;
+    myBook.bookName = <span class="code-string">"The C++ Programming Language"</span>;
+
+    <span class="code-comment">// Print the values</span>
+    cout &lt;&lt; <span class="code-string">"Book ID: "</span> &lt;&lt; myBook.bookID &lt;&lt; endl;
+    cout &lt;&lt; <span class="code-string">"Book Name: "</span> &lt;&lt; myBook.bookName &lt;&lt; endl;
+    cout &lt;&lt; <span class="code-string">"Price: $"</span> &lt;&lt; myBook.price &lt;&lt; endl;
+    cout &lt;&lt; <span class="code-string">"Copies Available: "</span> &lt;&lt; myBook.numOfCopies &lt;&lt; endl;
+
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}
+</code></pre>
+            </div>
+        </div>
+    </article>
+
+    <article id="q2d">
+        <h2>2 (d) - Output Analysis: Pointers, References, and Value Semantics</h2>
+        <div class="question-box">
+            Write the output of the following program.
+        </div>
+        <div class="answer-box">
+            <div class="key-concepts-box">
+                <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                <ul>
+                    <li><strong>Value Copy:</strong> `double number01 = number;` creates an independent copy. Changing `number` later will not affect `number01`.</li>
+                    <li><strong>Pointer (`*`):</strong> `double* number02 = &number;` stores the memory address of `number`. `*number02` accesses `number`'s value.</li>
+                    <li><strong>Reference (`&`):</strong> `double& number03 = *number02;` creates an alias for whatever `number02` is pointing to (which is `number`). From this point on, `number03` and `number` are two names for the same variable.</li>
+                    <li><strong>Pointer Reassignment:</strong> A pointer can be changed to point to a different variable's address.</li>
+                </ul>
+            </div>
+            <h3>Code and Execution Trace</h3>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span></div>
+                <pre><code>int main() {
+    double number = 1000;
+    double number01 = number;          // number01 is a copy, value is 1000
+    double *number02 = &number;         // number02 points to 'number'
+    double &number03 = *number02;       // number03 is a reference to 'number'
+
+    cout << number << endl;             // Prints value of number: 1000
+    *number02 = *number02 * 2;          // The value at the address of number is doubled. 'number' becomes 2000.
+    cout << *number02 << endl;          // Prints the new value of number via pointer: 2000
+    cout << number03 << endl;           // Prints the new value of number via reference: 2000
+
+    number02 = &number01;               // Pointer now points to number01 (whose value is still 1000)
+    cout << *number02 << endl;          // Prints the value of what number02 now points to: 1000
+}</code></pre>
+            </div>
+            <div class="output-box"><pre>1000
+2000
+2000
+1000</pre></div>
+        </div>
+    </article>
+
+    <article id="q2e">
+        <h2>2 (e) - Loop Rewriting: `for` to `while`</h2>
+        <div class="question-box">
+            Rewrite the following program only using `while` loops. Do not use `if`, `if-else`, `switch`, condition operator or `do-while` loops.
+        </div>
+        <div class="answer-box">
+            <div class="key-concepts-box">
+                <h4><i class="fa-solid fa-brain"></i> Key Concepts: Translating `for` to `while`</h4>
+                <p>A `for` loop `for (initialization; condition; update)` can always be translated into an equivalent `while` loop structure:</p>
+                <pre><code>initialization;
+while (condition) {
+    // loop body
+    update;
+}</code></pre>
+            </div>
+
+            <h3>Original `for` Loop Code</h3>
+            <div class="code-block">
+                <div class="code-header"><span>Original C++</span></div>
+                <pre><code>for (int i = 5; i >= 0; i--) {
+    for (int j = 1; j <= 5; j++) {
+        cout << j;
+    }
+    cout << "\n";
+}</code></pre>
+            </div>
+
+            <h3>Rewritten `while` Loop Code</h3>
+            <div class="code-block">
+                <div class="code-header"><span>Rewritten C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-keyword">int</span> main() {
+    <span class="code-type">int</span> i = <span class="code-number">5</span>; <span class="code-comment">// Initialization for the outer loop</span>
+    <span class="code-keyword">while</span> (i >= <span class="code-number">0</span>) { <span class="code-comment">// Condition for the outer loop</span>
+        <span class="code-type">int</span> j = <span class="code-number">1</span>; <span class="code-comment">// Initialization for the inner loop</span>
+        <span class="code-keyword">while</span> (j <= <span class="code-number">5</span>) { <span class="code-comment">// Condition for the inner loop</span>
+            cout << j;
+            j++; <span class="code-comment">// Update for the inner loop</span>
+        }
+        cout << <span class="code-string">"\n"</span>;
+        i--; <span class="code-comment">// Update for the outer loop</span>
+    }
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+            </div>
+        </div>
+    </article>
+
+</main>
+
+<script src="js/script.js"></script>
+</body>
+</html>

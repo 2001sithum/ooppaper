@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 3 - OOP Core Concepts</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<nav class="sidebar">
+    <div class="sidebar-header">
+        <h2>OOP Exam Review</h2>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="main-question"><a href="question1.html">Question 1</a></li>
+        <li class="main-question"><a href="question2.html">Question 2</a></li>
+        <li class="main-question">
+            <a href="question3.html">Question 3</a>
+            <ul class="sub-questions">
+                <li><a href="#q3a">3 (a) - Multiple Inheritance Ambiguity</a></li>
+                <li><a href="#q3b">3 (b) - Function Overloading</a></li>
+                <li><a href="#q3c">3 (c) - Copy Constructor</a></li>
+                <li><a href="#q3d">3 (d) - Destructor</a></li>
+                <li><a href="#q3e">3 (e) - Out-of-Class Definition</a></li>
+                <li><a href="#q3f">3 (f) - Abstraction</a></li>
+            </ul>
+        </li>
+        <li class="main-question"><a href="question4.html">Question 4</a></li>
+        <li class="main-question"><a href="question5.html">Question 5</a></li>
+        <li class="main-question"><a href="index.html">Core Concepts Home</a></li>
+        <li class="main-question"><a href="Exam_Nov_2023_Solved.html">Exam_Nov_2023_Solved</a></li>
+
+
+    </ul>
+</nav>
+
+<main class="main-content">
+    <h1>Question 3: Core Object-Oriented Concepts</h1>
+
+    <article id="q3a">
+        <h2>3 (a) - Ambiguity in Multiple Inheritance</h2>
+        <div class="question-box">
+            Describe how C++ handles ambiguity in multiple inheritance using code segments as examples.
+        </div>
+        <div class="answer-box">
+            <div class="key-concepts-box">
+                <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                <ul>
+                    <li><strong>Multiple Inheritance:</strong> A feature where a class can inherit from more than one base class, combining their features.</li>
+                    <li><strong>Ambiguity:</strong> A compilation error that occurs when the compiler cannot determine which member function or variable to use because it exists in multiple base classes with the same name.</li>
+                    <li><strong>Scope Resolution Operator (<code>::</code>):</strong> An operator used to specify which namespace or class a member belongs to, thereby resolving ambiguity.</li>
+                </ul>
+            </div>
+
+            <h3>Explanation of the Problem</h3>
+            <p>When a derived class inherits from two or more base classes that happen to have a member (function or variable) with the exact same name and signature, an ambiguity arises. If you try to call that member through an object of the derived class, the compiler is confused. It doesn't know which base class's version of the member you intend to use.</p>
+
+            <h3>The Solution: Scope Resolution Operator</h3>
+            <p>C++ handles this ambiguity by requiring the programmer to explicitly state which base class's member they want to access. This is done using the <strong>Scope Resolution Operator (<code>::</code>)</strong>.</p>
+            <p>The syntax is: <code>objectName.ClassName::memberName</code>.</p>
+
+            <h3>Diagram: The Ambiguity Scenario</h3>
+            <div class="diagram-box">
+                <h4>Inheritance Structure</h4>
+                <svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+                    <defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#fff" stroke="#333" stroke-width="1.5"></path></marker></defs>
+                    <style>.box{fill:#e3f2fd;stroke:#1565c0;stroke-width:2;}.label{font-family:var(--font-code);font-size:14px;text-anchor:middle;}</style>
+                    <rect x="20" y="20" width="150" height="50" class="box" rx="5"/><text x="95" y="50" class="label">BaseA { display() }</text>
+                    <rect x="230" y="20" width="150"height="50" class="box" rx="5"/><text x="305" y="50" class="label">BaseB { display() }</text>
+                    <rect x="125" y="130" width="150" height="50" class="box" rx="5"/><text x="200" y="160" class="label">Derived</text>
+                    <line x1="95" y1="70" x2="190" y2="130" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <line x1="305" y1="70" x2="210" y2="130" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <text x="200" y="110" fill="red" font-weight="bold" text-anchor="middle">AMBIGUOUS call to display()</text>
+                </svg>
+            </div>
+
+            <h3>Code Example</h3>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+<span class="code-keyword">class</span> BaseA {
+<span class="code-keyword">public</span>:
+    <span class="code-keyword">void</span> display() { cout &lt;&lt; <span class="code-string">"Function from BaseA called."</span> &lt;&lt; endl; }
+};
+<span class="code-keyword">class</span> BaseB {
+<span class="code-keyword">public</span>:
+    <span class="code-keyword">void</span> display() { cout &lt;&lt; <span class="code-string">"Function from BaseB called."</span> &lt;&lt; endl; }
+};
+<span class="code-keyword">class</span> Derived : <span class="code-keyword">public</span> BaseA, <span class="code-keyword">public</span> BaseB {};
+
+<span class="code-keyword">int</span> main() {
+    Derived d_obj;
+    <span class="code-comment">// d_obj.display(); // Error: request for member 'display' is ambiguous</span>
+    cout &lt;&lt; <span class="code-string">"Resolving ambiguity:"</span> &lt;&lt; endl;
+    d_obj.BaseA::display();
+    d_obj.BaseB::display();
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}
+</code></pre>
+            </div>
+        </div>
+    </article>
+
+    <article id="q3b">
+        <h2>3 (b) - Function Overloading</h2>
+        <div class="question-box">
+            Write a C++ program that defines a class `Calculator` with overloaded `add()` functions for two integers, three integers, two floats, and two strings.
+        </div>
+        <div class="answer-box">
+            <div class="key-concepts-box">
+                <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                <ul>
+                    <li><strong>Function Overloading:</strong> A form of compile-time polymorphism where multiple functions can have the same name but different parameters (in number, type, or order).</li>
+                    <li><strong>Function Signature:</strong> The combination of a function's name and its parameter list. The return type is NOT part of the signature for overloading purposes.</li>
+                    <li><strong>Name Mangling:</strong> The process used by the C++ compiler to give each function a unique internal name based on its signature, which enables overloading.</li>
+                </ul>
+            </div>
+            <h3>Complete Program: `Calculator` Class</h3>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-preprocessor">#include &lt;string&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+<span class="code-keyword">class</span> Calculator {
+<span class="code-keyword">public</span>:
+    <span class="code-type">int</span> add(<span class="code-type">int</span> a, <span class="code-type">int</span> b) { <span class="code-keyword">return</span> a + b; }
+    <span class="code-type">int</span> add(<span class="code-type">int</span> a, <span class="code-type">int</span> b, <span class="code-type">int</span> c) { <span class="code-keyword">return</span> a + b + c; }
+    <span class="code-type">double</span> add(<span class="code-type">double</span> a, <span class="code-type">double</span> b) { <span class="code-keyword">return</span> a + b; }
+    <span class="code-type">string</span> add(<span class="code-keyword">const</span> <span class="code-type">string</span>& a, <span class="code-keyword">const</span> <span class="code-type">string</span>& b) { <span class="code-keyword">return</span> a + b; }
+};
+<span class="code-keyword">int</span> main() {
+    Calculator myCalc;
+    cout &lt;&lt; <span class="code-string">"Sum (10, 20): "</span> &lt;&lt; myCalc.add(<span class="code-number">10</span>, <span class="code-number">20</span>) &lt;&lt; endl;
+    cout &lt;&lt; <span class="code-string">"Sum (10, 20, 30): "</span> &lt;&lt; myCalc.add(<span class="code-number">10</span>, <span class="code-number">20</span>, <span class="code-number">30</span>) &lt;&lt; endl;
+    cout &lt;&lt; <span class="code-string">"Sum (5.5, 4.2): "</span> &lt;&lt; myCalc.add(<span class="code-number">5.5</span>, <span class="code-number">4.2</span>) &lt;&lt; endl;
+    cout &lt;&lt; <span class="code-string">"Concat ('OOP ', 'Fun'): "</span> &lt;&lt; myCalc.add(<span class="code-string">"OOP "</span>, <span class="code-string">"Fun"</span>) &lt;&lt; endl;
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+            </div>
+        </div>
+    </article>
+
+    <article id="q3c">
+        <h2>3 (c) - Copy Constructor</h2>
+        <div class="question-box">
+            Describe what a copy constructor is with an example.
+        </div>
+        <div class="answer-box">
+            <div class="key-concepts-box">
+                <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                <ul>
+                    <li><strong>Copy Constructor:</strong> A special constructor that creates a new object as a copy of an existing object. Signature: `ClassName(const ClassName& other)`.</li>
+                    <li><strong>Shallow Copy:</strong> Default behavior. Copies member values. If a member is a pointer, only the address is copied, leading to two pointers pointing to the same memory.</li>
+                    <li><strong>Deep Copy:</strong> Required for classes with dynamic memory. Allocates new memory for pointers and copies the data, ensuring the new object is fully independent.</li>
+                </ul>
+            </div>
+            <h3>Deep Dive: Shallow Copy vs. Deep Copy</h3>
+            <p>A shallow copy is dangerous for classes managing resources like memory or files. When a shallow-copied object is destroyed, it frees the memory. When the other object is destroyed, it tries to free the *same* memory again, leading to a crash (double free error). A deep copy prevents this by giving each object its own resource to manage.</p>
+
+            <h3>Code Example: Implementing a Deep Copy</h3>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-preprocessor">#include &lt;cstring&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-keyword">class</span> StringWrapper {
+<span class="code-keyword">private</span>:
+    <span class="code-type">char</span>* data;
+<span class="code-keyword">public</span>:
+    StringWrapper(<span class="code-keyword">const</span> <span class="code-type">char</span>* str = <span class="code-string">""</span>) {
+        data = <span class="code-keyword">new</span> <span class="code-type">char</span>[strlen(str) + <span class="code-number">1</span>];
+        strcpy(data, str);
+    }
+    <span class="code-comment">// Deep Copy Constructor</span>
+    StringWrapper(<span class="code-keyword">const</span> StringWrapper& other) {
+        cout &lt;&lt; <span class="code-string">"** Deep Copy Constructor Called **"</span> &lt;&lt; endl;
+        data = <span class="code-keyword">new</span> <span class="code-type">char</span>[strlen(other.data) + <span class="code-number">1</span>]; <span class="code-comment">// 1. Allocate new memory</span>
+        strcpy(data, other.data); <span class="code-comment">// 2. Copy the data</span>
+    }
+    ~StringWrapper() { <span class="code-keyword">delete</span>[] data; }
+    <span class="code-keyword">void</span> print() { cout &lt;&lt; data &lt;&lt; endl; }
+};
+
+<span class="code-keyword">int</span> main() {
+    StringWrapper original(<span class="code-string">"Hello"</span>);
+    StringWrapper copy = original; <span class="code-comment">// Invokes copy constructor</span>
+    original.print();
+    copy.print();
+    <span class="code-keyword">return</span> <span class="code-number">0</span>; <span class="code-comment">// No crash, as each object manages its own memory.</span>
+}</code></pre>
+            </div>
+        </div>
+    </article>
+
+    <article id="q3d">
+        <h2>3 (d) - Destructor</h2>
+        <div class="question-box">
+            Describe what a destructor in C++ is using examples.
+        </div>
+        <div class="answer-box">
+            <div class="key-concepts-box">
+                <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                <ul>
+                    <li><strong>Destructor:</strong> A special member function (`~ClassName()`) that is automatically called when an object's lifetime ends (e.g., it goes out of scope or is deleted).</li>
+                    <li><strong>Purpose:</strong> Its primary purpose is to release resources acquired by the object during its lifetime, such as dynamic memory, file handles, or network connections. This prevents resource leaks.</li>
+                    <li><strong>Virtual Destructor:</strong> A base class should always have a `virtual` destructor if it's meant to be used polymorphically (i.e., deleting a derived object through a base class pointer). This ensures the correct chain of destructors is called.</li>
+                </ul>
+            </div>
+            <h3>Code Example: Resource Management</h3>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-keyword">class</span> ResourceManager {
+<span class="code-keyword">private</span>:
+    <span class="code-type">int</span>* data;
+<span class="code-keyword">public</span>:
+    ResourceManager() {
+        data = <span class="code-keyword">new</span> <span class="code-type">int</span>[<span class="code-number">100</span>]; <span class="code-comment">// Acquire resource (memory) in constructor</span>
+        cout &lt;&lt; <span class="code-string">"Resource acquired."</span> &lt;&lt; endl;
+    }
+    ~ResourceManager() {
+        <span class="code-keyword">delete</span>[] data; <span class="code-comment">// Release resource in destructor</span>
+        cout &lt;&lt; <span class="code-string">"Resource released. Memory leak prevented."</span> &lt;&lt; endl;
+    }
+};
+
+<span class="code-keyword">void</span> testFunction() {
+    cout &lt;&lt; <span class="code-string">"Entering testFunction..."</span> &lt;&lt; endl;
+    ResourceManager res; <span class="code-comment">// Object is created here</span>
+    cout &lt;&lt; <span class="code-string">"Exiting testFunction..."</span> &lt;&lt; endl;
+} <span class="code-comment">// 'res' goes out of scope, destructor is automatically called here</span>
+
+<span class="code-keyword">int</span> main() {
+    testFunction();
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+            </div>
+        </div>
+    </article>
+
+    <article id="q3e">
+        <h2>3 (e) - Out-of-Class Member Function Definition</h2>
+        <div class="question-box">
+            Define the `getDist()` function for the following program... The function needs to be written outside the class.
+        </div>
+        <div class="answer-box">
+            <div class="key-concepts-box">
+                <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                <ul>
+                    <li><strong>Separation of Interface and Implementation:</strong> It's good practice to separate the declaration of a class (its interface, in a header file `.h`) from the definition of its member functions (its implementation, in a source file `.cpp`).</li>
+                    <li><strong>Scope Resolution Operator (`::`):</strong> When defining a member function outside its class, you must use the scope resolution operator to tell the compiler which class the function belongs to. Syntax: `ReturnType ClassName::functionName(params) { ... }`.</li>
+                </ul>
+            </div>
+            <h3>Complete Program with Out-of-Class Definition</h3>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+<span class="code-keyword">class</span> Distance {
+<span class="code-keyword">private</span>:
+    <span class="code-type">int</span> feet;
+    <span class="code-type">int</span> inches;
+<span class="code-keyword">public</span>:
+    Distance(<span class="code-type">int</span> ft, <span class="code-type">int</span> in) : feet(ft), inches(in) {}
+    <span class="code-comment">// Function is only DECLARED here</span>
+    <span class="code-type">int</span> getDist();
+};
+
+<span class="code-comment">// Function is DEFINED here, outside the class, using scope resolution</span>
+<span class="code-type">int</span> Distance::getDist() {
+    <span class="code-keyword">return</span> (feet * <span class="code-number">12</span>) + inches;
+}
+
+<span class="code-keyword">int</span> main() {
+    Distance dist(<span class="code-number">10</span>, <span class="code-number">5</span>);
+    cout &lt;&lt; <span class="code-string">"Total distance in inches: "</span> &lt;&lt; dist.getDist() &lt;&lt; endl; <span class="code-comment">// Output will be 125</span>
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+            </div>
+        </div>
+    </article>
+
+    <article id="q3f">
+        <h2>3 (f) - Abstraction</h2>
+        <div class="question-box">
+            Explain why abstraction is essential for developing real-world applications.
+        </div>
+        <div class="answer-box">
+            <p>Abstraction is the principle of hiding complex implementation details and showing only the essential, relevant information to the user. It is the foundation of good software design.</p>
+            <h3>Why Abstraction is Essential:</h3>
+            <ol>
+                <li><strong>Manages Complexity:</strong> Real-world systems are incredibly complex. Abstraction allows us to model these systems by breaking them into smaller, understandable components. A developer using a `DatabaseConnection` object only needs to know about `connect()` and `query()` methods, not the underlying network protocols or SQL driver implementation.</li>
+                <li><strong>Improves Maintainability:</strong> It decouples the interface from the implementation. The internal workings of a class can be completely rewritten for better performance or to fix bugs. As long as the public interface (the abstraction) remains unchanged, none of the code that uses the class needs to be modified.</li>
+                <li><strong>Enhances Team Collaboration:</strong> Different teams can work on different parts of a system concurrently. One team can develop a component while another team develops code that uses it, relying only on the agreed-upon public interface.</li>
+                <li><strong>Increases Security and Safety:</strong> By exposing only a limited set of public methods, abstraction prevents users from manipulating an object's internal state in unintended or harmful ways, thus ensuring data integrity.</li>
+            </ol>
+        </div>
+    </article>
+
+</main>
+
+<script src="js/script.js"></script>
+</body>
+</html>

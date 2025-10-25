@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concept: Inheritance</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<nav class="sidebar">
+    <!-- Sidebar content from index.html -->
+    <div class="sidebar-header"><h2>OOP Concepts</h2></div>
+    <ul class="sidebar-nav">
+        <li class="main-question"><a href="index.html">Home</a></li>
+        <li class="main-question"><a href="concept_inheritance.html">Inheritance</a></li>
+        <li class="main-question"><a href="concept_polymorphism.html">Polymorphism</a></li>
+        <li class="main-question"><a href="concept_encapsulation.html">Encapsulation</a></li>
+        <li class="main-question"><a href="concept_abstraction.html">Abstraction</a></li>
+        <li class="main-question"><a href="concept_static_members.html">Static Members</a></li>
+        <li class="main-question"><a href="concept_pointers_references.html">Pointers vs References</a></li>
+        <li class="main-question"><a href="Exam_Nov_2023_Solved.html">Exam_Nov_2023_Solved</a></li>
+
+    </ul>
+</nav>
+<main class="main-content">
+    <h1>Concept: Inheritance (පරම්පරාගත බව)</h1>
+
+    <article>
+        <div class="answer-box">
+            <!-- Beginner Level -->
+            <h3><i class="fa-solid fa-seedling"></i> Beginner Level: What is Inheritance?</h3>
+            <p><strong>English:</strong> Inheritance is one of the key features of Object-Oriented Programming. It allows a new class (called the **derived** or **child** class) to be based on an existing class (the **base** or **parent** class). The child class inherits the attributes and methods of the parent class, promoting code reusability. This creates an **"is-a"** relationship.</p>
+            <p><strong>Sinhala (සිංහල):</strong> Inheritance කියන්නේ OOP වල ප්‍රධාන ලක්ෂණයක්. මේකෙන් අලුත් class (derived/child) එකකට, දැනට තියෙන class (base/parent) එකක ගුණාංග සහ ක්‍රියා උරුම කරගන්න (inherit) ඉඩ දෙනවා. Child class එකට parent ගේ දේවල් ලැබෙන නිසා, code එක නැවත නැවත ලිවීම (code reusability) අඩු වෙනවා. මේකෙන් හැදෙන්නේ **"is-a"** (එකක් වේ) සම්බන්ධතාවයක්.</p>
+
+            <h4>Real-World Scenario</h4>
+            <p><strong>English:</strong> A `Manager` **is an** `Employee`. A `Developer` **is an** `Employee`. Both a `Manager` and a `Developer` will have a `name` and a `salary`, which can be defined in a parent `Employee` class. The `Manager` can then add a specific attribute like `teamSize`, and the `Developer` can add `programmingLanguage`. They both inherit the common properties from `Employee`.</p>
+            <p><strong>Sinhala (සිංහල):</strong> `Manager` කෙනෙක් කියන්නේ `Employee` (සේවකයෙක්). `Developer` කෙනෙක් කියන්නෙත් `Employee` කෙනෙක්. `Manager` සහ `Developer` දෙන්නටම `name` එකක් සහ `salary` එකක් තියෙනවා. මේ පොදු දේවල් `Employee` කියන parent class එකේ හදන්න පුලුවන්. ඊට පස්සේ `Manager` class එකට `teamSize` වගේ එයාටම විශේෂ දෙයක් එකතු කරන්නත්, `Developer` class එකට `programmingLanguage` එකතු කරන්නත් පුලුවන්. දෙන්නම `Employee` ගෙන් පොදු දේවල් inherit කරගන්නවා.</p>
+
+            <hr style="margin: 20px 0;">
+
+            <!-- Intermediate Level -->
+            <h3><i class="fa-solid fa-graduation-cap"></i> Intermediate Level: Syntax and Access Specifiers</h3>
+            <p>The syntax for inheritance in C++ is `class DerivedClass : accessSpecifier BaseClass`. The `accessSpecifier` (`public`, `protected`, or `private`) determines how the inherited members from the base class will be accessible in the derived class.</p>
+            <ul>
+                <li><strong>`public` Inheritance:</strong> This is the most common type. Public members of the base class stay public in the derived class. Protected members stay protected. This models a true "is-a" relationship.</li>
+                <li><strong>`protected` Inheritance:</strong> Public and protected members of the base class become protected in the derived class.</li>
+                <li><strong>`private` Inheritance:</strong> Public and protected members of the base class become private in the derived class. This models a "is-implemented-in-terms-of" relationship.</li>
+            </ul>
+
+            <h4>Sample Code 1: Single Inheritance</h4>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-preprocessor">#include &lt;string&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-comment">// Base / Parent Class</span>
+<span class="code-keyword">class</span> Employee {
+<span class="code-keyword">protected</span>: <span class="code-comment">// Protected so child classes can access it directly</span>
+    <span class="code-type">string</span> name;
+<span class="code-keyword">public</span>:
+    Employee(<span class="code-keyword">const</span> <span class="code-type">string</span>& n) : name(n) {}
+    <span class="code-keyword">void</span> work() { cout &lt;&lt; name &lt;&lt; <span class="code-string">" is working."</span> &lt;&lt; endl; }
+};
+
+<span class="code-comment">// Derived / Child Class</span>
+<span class="code-keyword">class</span> Manager : <span class="code-keyword">public</span> Employee {
+<span class="code-keyword">public</span>:
+    Manager(<span class="code-keyword">const</span> <span class="code-type">string</span>& n) : Employee(n) {} <span class="code-comment">// Call base constructor</span>
+    <span class="code-keyword">void</span> manage() { cout &lt;&lt; name &lt;&lt; <span class="code-string">" is managing a team."</span> &lt;&lt; endl; }
+};
+
+<span class="code-keyword">int</span> main() {
+    Manager mgr(<span class="code-string">"Alice"</span>);
+    mgr.work();   <span class="code-comment">// Inherited from Employee</span>
+    mgr.manage(); <span class="code-comment">// Its own method</span>
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+            </div>
+
+            <hr style="margin: 20px 0;">
+
+            <h4>Sample Code 2: Multilevel Inheritance</h4>
+            <p>This example demonstrates a chain of inheritance (`GrandParent -> Parent -> Child`). The `Child` class inherits members from both `Parent` and `GrandParent`, showing how properties are passed down through generations.</p>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-comment">// Level 1: The original base class</span>
+<span class="code-keyword">class</span> GrandParent {
+<span class="code-keyword">public</span>:
+    <span class="code-keyword">void</span> grandParentLegacy() {
+        cout &lt;&lt; <span class="code-string">"This is a legacy from the GrandParent."</span> &lt;&lt; endl;
+    }
+};
+
+<span class="code-comment">// Level 2: Inherits from GrandParent</span>
+<span class="code-keyword">class</span> Parent : <span class="code-keyword">public</span> GrandParent {
+<span class="code-keyword">public</span>:
+    <span class="code-keyword">void</span> parentAsset() {
+        cout &lt;&lt; <span class="code-string">"This is an asset from the Parent."</span> &lt;&lt; endl;
+    }
+};
+
+<span class="code-comment">// Level 3: Inherits from Parent (and indirectly from GrandParent)</span>
+<span class="code-keyword">class</span> Child : <span class="code-keyword">public</span> Parent {
+<span class="code-keyword">public</span>:
+    <span class="code-keyword">void</span> childSkill() {
+        cout &lt;&lt; <span class="code-string">"This is a skill of the Child."</span> &lt;&lt; endl;
+    }
+};
+
+<span class="code-keyword">int</span> main() {
+    Child myChild;
+
+    cout &lt;&lt; <span class="code-string">"Child's capabilities:"</span> &lt;&lt; endl;
+    myChild.childSkill();         <span class="code-comment">// Accesses its own method</span>
+    myChild.parentAsset();        <span class="code-comment">// Accesses Parent's method</span>
+    myChild.grandParentLegacy();  <span class="code-comment">// Accesses GrandParent's method</span>
+
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+            </div>
+
+
+            <hr style="margin: 20px 0;">
+
+            <!-- Advanced Level -->
+            <h3><i class="fa-solid fa-rocket"></i> Advanced Level: Types of Inheritance and Problems</h3>
+            <ul>
+                <li><strong>Single Inheritance:</strong> A class inherits from only one base class. (Sample Code 1).</li>
+                <li><strong>Multilevel Inheritance:</strong> A class inherits from a derived class, forming a chain (`A -> B -> C`). (Sample Code 2).</li>
+                <li><strong>Multiple Inheritance:</strong> A class inherits from two or more base classes (`class C : public A, public B`). This can lead to ambiguity if both base classes have a member with the same name.</li>
+                <li><strong>Hierarchical Inheritance:</strong> Multiple classes inherit from a single base class (e.g., `Manager` and `Developer` both inheriting from `Employee`).</li>
+                <li><strong>Hybrid Inheritance:</strong> A combination of two or more of the above types.</li>
+            </ul>
+            <div class="key-concepts-box">
+                <h4><i class="fa-solid fa-triangle-exclamation"></i> The Diamond Problem</h4>
+                <p>A classic issue in multiple inheritance. It occurs when a class `D` inherits from two classes, `B` and `C`, and both `B` and `C` inherit from a single base class `A`. This means `D` gets two copies of `A`'s members, causing ambiguity.</p>
+                <p><strong>Solution:</strong> C++ solves this using **virtual inheritance**. By making the inheritance from `A` to `B` and `C` virtual (`class B : virtual public A`), it ensures that `D` receives only a single shared copy of `A`'s members.</p>
+            </div>
+        </div>
+    </article>
+</main>
+<script src="js/script.js"></script>
+</body>
+</html>

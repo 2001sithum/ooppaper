@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COM 1305 - Nov/Dec 2023 Solved Paper</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<nav class="sidebar">
+    <div class="sidebar-header">
+        <h2>Nov/Dec 2023 Exam</h2>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="main-question"><a href="#q1">Question 1</a></li>
+        <li class="main-question"><a href="#q2">Question 2</a></li>
+        <li class="main-question"><a href="#q3">Question 3</a></li>
+        <li class="main-question"><a href="#q4">Question 4</a></li>
+        <li class="main-question"><a href="#q5">Question 5</a></li>
+    </ul>
+</nav>
+
+<main class="main-content">
+    <h1>COM 1305 – Object Oriented Programming: Solved Paper (Nov/Dec 2023)</h1>
+
+    <!-- ======================= QUESTION 1 ======================= -->
+    <section id="q1">
+        <h2>Question 1</h2>
+
+        <article id="q1a">
+            <h3>1 (a) - Output of a basic program</h3>
+            <div class="question-box">Write down the output of the following program.</div>
+            <div class="answer-box">
+                <div class="key-concepts-box">
+                    <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                    <ul>
+                        <li><strong>Integer Division:</strong> When dividing two integers in C++, the result is also an integer. Any fractional part is truncated (discarded), not rounded. For example, `100 / 3` is `33`, not `33.33`.</li>
+                        <li><strong>`cout` Buffering:</strong> `cout` streams output consecutively without adding spaces or newlines unless explicitly told to do so.</li>
+                    </ul>
+                </div>
+                <h4>Code and Analysis</h4>
+                <div class="code-block">
+                    <pre><code>int i = 100;
+cout &lt;&lt; i/3;    // 100 divided by 3 is 33.33..., truncated to 33.
+cout &lt;&lt; i/11;   // 100 divided by 11 is 9.09..., truncated to 9.</code></pre>
+                </div>
+                <p>The first `cout` prints `33`. The second `cout` prints `9` immediately after it.</p>
+                <h4>Final Output</h4>
+                <div class="output-box"><pre>339</pre></div>
+            </div>
+        </article>
+
+        <article id="q1b">
+            <h3>1 (b) - Output of constructor chaining</h3>
+            <div class="question-box">Write down the output of the following program.</div>
+            <div class="answer-box">
+                <div class="key-concepts-box">
+                    <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                    <ul>
+                        <li><strong>Constructor Chaining:</strong> When a derived class object is created, the base class's constructor is called *first*, before the derived class's constructor body is executed.</li>
+                        <li><strong>Default Constructor:</strong> If a constructor call doesn't specify arguments, the default (parameterless) constructor is used.</li>
+                    </ul>
+                </div>
+                <h4>Execution Trace</h4>
+                <ol>
+                    <li><strong>`Child c;`</strong>
+                        <ul>
+                            <li>The `Child` object `c` is created.</li>
+                            <li>Before `Child()` is called, its parent's default constructor `Parent()` is called. It prints "Parent()".</li>
+                            <li>Then, the `Child()` default constructor is called. It prints "Child()".</li>
+                        </ul>
+                    </li>
+                    <li><strong>`Child d("running");`</strong>
+                        <ul>
+                            <li>The `Child` object `d` is created with an argument.</li>
+                            <li>Before `Child(string)` is called, its parent's default constructor `Parent()` is called. It prints "Parent()".</li>
+                            <li>Then, the `Child(string)` constructor is called. It prints "Child() is running".</li>
+                        </ul>
+                    </li>
+                </ol>
+                <h4>Final Output</h4>
+                <div class="output-box"><pre>Parent()
+Child()
+Parent()
+Child() is running</pre></div>
+            </div>
+        </article>
+
+        <article id="q1c">
+            <h3>1 (c) - Explain a pointer in C++</h3>
+            <div class="question-box">Explain what a pointer in C++ is.</div>
+            <div class="answer-box">
+                <p>A <strong>pointer</strong> in C++ is a special type of variable that does not store data directly but instead stores a **memory address**. Its purpose is to "point to" the location of another variable in memory.</p>
+                <ul>
+                    <li><strong>Declaration:</strong> It's declared using an asterisk (`*`), like `int* ptr;`. This means `ptr` is a variable that can hold the address of an integer.</li>
+                    <li><strong>Address-of Operator (`&`):</strong> To get the memory address of a variable, you use the `&` operator (e.g., `ptr = &myVariable;`).</li>
+                    <li><strong>Dereference Operator (`*`):</strong> To access the *value* at the address a pointer holds, you use the `*` operator again (e.g., `cout << *ptr;`).</li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="q1d">
+            <h3>1 (d) - Explain array out-of-bounds access</h3>
+            <div class="question-box">Explain what happens when the following program is executed. You are not required to write down the output.</div>
+            <div class="answer-box">
+                <div class="key-concepts-box">
+                    <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                    <ul>
+                        <li><strong>Array Bounds:</strong> An array declared as `int array[2];` has valid indices `0` and `1`. The size is 2, but the maximum index is `size - 1`.</li>
+                        <li><strong>Undefined Behavior:</strong> Accessing an array outside of its valid bounds is a serious error in C++. The C++ standard does not define what should happen. This is called "Undefined Behavior" (UB).</li>
+                    </ul>
+                </div>
+                <h4>Explanation</h4>
+                <p>The program declares an integer array named `array` with a size of 2. This means it has two valid memory locations: `array[0]` and `array[1]`.</p>
+                <p>The code then attempts to access `array[3]` and `array[4]`. Both of these indices are **out of bounds** for the declared array.</p>
+                <p>When this happens, the program exhibits **Undefined Behavior**. This means there is no guaranteed outcome. Possible consequences include:</p>
+                <ol>
+                    <li>The program might crash immediately with a segmentation fault.</li>
+                    <li>It might print "garbage" values—random data from whatever happens to be in those adjacent memory locations.</li>
+                    <li>It might seem to work correctly but silently corrupt other variables in the program, leading to strange bugs later on.</li>
+                    <li>The output can be different every time the program is run or on different computers/compilers.</li>
+                </ol>
+                <p>In summary, the program attempts to read from memory locations it does not own, leading to unpredictable and dangerous behavior.</p>
+            </div>
+        </article>
+
+        <article id="q1e">
+            <h3>1 (e) - Output of pre/post increment and pointer operations</h3>
+            <div class="question-box">Write down the output of the following code.</div>
+            <div class="answer-box">
+                <h4>Execution Trace</h4>
+                <div class="code-block">
+                <pre><code>int count = 10;
+int *number = &count; // 'number' points to 'count'
+
+// --- Line 1 ---
+cout &lt;&lt; --count*count &lt;&lt; endl; // Prints 81
+
+// --- Line 2 ---
+cout &lt;&lt; ++count &lt;&lt; endl; // Prints 10
+
+// --- Line 3 ---
+cout &lt;&lt; count*count-- &lt;&lt; endl; // Prints 100
+
+// --- Line 4 ---
+cout &lt;&lt; count++ &lt;&lt; endl; // Prints 9
+
+// --- Line 5 ---
+*number = 20; // 'count' is set to 20
+
+// --- Line 6 ---
+cout &lt;&lt; ++count &lt;&lt; endl; // Prints 21
+
+// --- Line 7 ---
+cout &lt;&lt; count &lt;&lt; endl; // Prints 21
+
+// --- Line 8 ---
+cout &lt;&lt; count++ &lt;&lt; endl; // Prints 21
+
+// --- Line 9 ---
+cout &lt;&lt; ++*number &lt;&lt; endl; // Prints 23
+</code></pre>
+                </div>
+                <h4>Final Output</h4>
+                <div class="output-box"><pre>81
+10
+100
+9
+21
+21
+21
+23</pre></div>
+            </div>
+        </article>
+
+        <article id="q1f">
+            <h3>1 (f) - Explain outputs of address-of operator</h3>
+            <div class="question-box">Explain whether the outputs of the following program are similar or different.</div>
+            <div class="answer-box">
+                <h4>Explanation</h4>
+                <p>The outputs will be **different**.</p>
+                <p>The code declares two separate integer variables, `number` and `number2`. Even though `number2` is initialized with the *value* of `number`, they are distinct variables stored in separate locations in memory.</p>
+                <ul>
+                    <li>`cout << &number << endl;` prints the memory address of the variable `number`.</li>
+                    <li>`cout << &number2 << endl;` prints the memory address of the variable `number2`.</li>
+                </ul>
+                <p>Since they are two different variables, the compiler allocates two different memory locations for them. Therefore, their memory addresses will be different.</p>
+            </div>
+        </article>
+    </section>
+
+    <!-- ======================= QUESTION 2 ======================= -->
+    <section id="q2">
+        <h2 style="margin-top: 60px;">Question 2</h2>
+
+        <article id="q2a">
+            <h3>2 (a) - Rewrite `for` loop using `while`</h3>
+            <div class="question-box">Rewrite the following code segment using a `while()` loop.</div>
+            <div class="answer-box">
+                <h4>Original Code</h4>
+                <div class="code-block"><pre><code>for(int i = 0; i < 10; i++)
+    cout << i << endl;</code></pre></div>
+                <h4>Rewritten Code</h4>
+                <div class="code-block">
+                    <pre><code>int i = 0;          // 1. Initialization before the loop
+while (i < 10) {    // 2. Condition in the while statement
+    cout << i << endl;
+    i++;            // 3. Update at the end of the loop body
+}</code></pre>
+                </div>
+            </div>
+        </article>
+
+        <article id="q2b">
+            <h3>2 (b) - Output of expression with operator precedence</h3>
+            <div class="question-box">Write down the output of the following program.</div>
+            <div class="answer-box">
+                <div class="key-concepts-box">
+                    <h4><i class="fa-solid fa-brain"></i> Key Concepts: Operator Precedence</h4>
+                    <ol>
+                        <li>Parentheses `()`</li>
+                        <li>Multiplication `*`, Division `/`, Modulus `%` (left-to-right)</li>
+                        <li>Addition `+`, Subtraction `-` (left-to-right)</li>
+                    </ol>
+                </div>
+                <h4>Expression Evaluation</h4>
+                <div class="code-block">
+<pre><code>n + 5/3*4 + 2 - 5 + (1 + 4%3)  // n is 10
+// 1. Evaluate (): (1 + (4%3)) -> (1 + 1) -> 2
+// Expression: 10 + 5/3*4 + 2 - 5 + 2
+
+// 2. Evaluate *, /, % (left-to-right):
+//    a. (5/3) -> 1 (integer division)
+// Expression: 10 + 1*4 + 2 - 5 + 2
+//    b. (1*4) -> 4
+// Expression: 10 + 4 + 2 - 5 + 2
+
+// 3. Evaluate +, - (left-to-right):
+//    a. (10 + 4) -> 14
+//    b. (14 + 2) -> 16
+//    c. (16 - 5) -> 11
+//    d. (11 + 2) -> 13
+</code></pre>
+                </div>
+                <h4>Final Output</h4>
+                <div class="output-box"><pre>13</pre></div>
+            </div>
+        </article>
+
+        <article id="q2c">
+            <h3>2 (c) - Output with string references</h3>
+            <div class="question-box">Write down the output of the following program.</div>
+            <div class="answer-box">
+                <div class="key-concepts-box">
+                    <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                    <ul>
+                        <li><strong>Value Copy:</strong> `string refreshment = food;` creates a new, independent string. Changes to `food` will not affect `refreshment`.</li>
+                        <li><strong>Reference (`&`):</strong> `string &meal = food;` does *not* create a new string. `meal` becomes another name (an alias) for the `food` variable.</li>
+                    </ul>
+                </div>
+                <h4>Execution Trace</h4>
+                <div class="code-block">
+<pre><code>string food = "cake";        // food is "cake"
+string &meal = food;         // meal is an alias for food. Both are "cake".
+string refreshment = food;  // refreshment is a COPY. It is "cake".
+
+food = "bread";              // 'food' is changed to "bread".
+                             // Since 'meal' is an alias for 'food', 'meal' is also now "bread".
+                             // 'refreshment' is an independent copy, so it remains "cake".
+
+cout << food << endl;        // Prints "bread"
+cout << meal << endl;        // Prints "bread"
+cout << refreshment << endl; // Prints "cake"
+</code></pre>
+                </div>
+                <h4>Final Output</h4>
+                <div class="output-box"><pre>bread
+bread
+cake</pre></div>
+            </div>
+        </article>
+
+        <article id="q2d">
+            <h3>2 (d) - Output of boolean expressions</h3>
+            <div class="question-box">Write down the output of the following program.</div>
+            <div class="answer-box">
+                <p>In C++, when a boolean expression is printed, `true` is output as `1` and `false` is output as `0`.</p>
+                <h4>Line-by-Line Analysis</h4>
+                <div class="code-block">
+<pre><code>int n = 10;
+cout << (n == 11) << endl;  // false -> 0
+cout << (n > 10)  << endl;  // false -> 0
+cout << (n < 5)   << endl;  // false -> 0
+cout << (n == 0)  << endl;  // false -> 0
+cout << (n <= 10) << endl;  // true  -> 1
+</code></pre>
+                </div>
+                <h4>Final Output</h4>
+                <div class="output-box"><pre>0
+0
+0
+0
+1</pre></div>
+            </div>
+        </article>
+
+        <article id="q2e">
+            <h3>2 (e) - Implement a concrete derived class</h3>
+            <div class="question-box">Write down the concrete derived class `ManagerSalary` for `EmployeSalary`... Manager salary is 140% of the basic.</div>
+            <div class="answer-box">
+                <div class="key-concepts-box">
+                    <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                    <ul>
+                        <li><strong>Abstract Class:</strong> A class with at least one pure virtual function, which cannot be instantiated.</li>
+                        <li><strong>Pure Virtual Function (`=0`):</strong> A contract forcing derived classes to provide an implementation.</li>
+                        <li><strong>Concrete Class:</strong> A class that implements all inherited pure virtual functions and can be instantiated.</li>
+                    </ul>
+                </div>
+                <h4>Solution Code</h4>
+                <div class="code-block">
+                    <pre><code>class ManagerSalary : public EmployeSalary {
+public:
+    double calculateSal(double basic) override {
+        return basic * 1.40;
+    }
+};</code></pre>
+                </div>
+            </div>
+        </article>
+
+        <article id="q2f">
+            <h3>2 (f) - Write a `main` function to call the derived class method</h3>
+            <div class="question-box">Write down the `main` function that will call the `calculateSal` function from 2(e), passing the value 10000.</div>
+            <div class="answer-box">
+                <h4>Solution Code</h4>
+                <div class="code-block">
+                    <pre><code>int main() {
+    ManagerSalary manager;
+    double salary = manager.calculateSal(10000);
+    cout << "Manager Salary: " << salary << endl;
+    return 0;
+}</code></pre>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- ======================= QUESTION 3 ======================= -->
+    <section id="q3">
+        <h2 style="margin-top: 60px;">Question 3</h2>
+
+        <article id="q3a">
+            <h3>3 (a) - Write a `main` function for a given class structure</h3>
+            <div class="question-box">Write down the `main` function that will create an object of the following `Student` class and call the `printPerson` function.</div>
+            <div class="answer-box">
+                <p>The provided `Student` class is missing the implementation for its constructor and `sayPerson` method. To create a runnable program, we must complete them. The constructor needs to call the base class (`Person`) constructor. Note that the base class `Person` is abstract due to `sayPerson()=0`, but the question asks to call `printPerson` which is a concrete method.</p>
+                <h4>Complete Program and `main` Function</h4>
+                <div class="code-block">
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+class Person {
+private:
+    string name;
+    int nic;
+public:
+    // Base constructor to initialize members
+    Person(string n, int i) : name(n), nic(i) {}
+    void printPerson() {
+        cout << name << endl;
+        cout << nic << endl;
+    }
+    virtual void sayPerson() = 0; // Makes Person abstract
+    virtual ~Person() {} // Virtual destructor
+};
+
+class Student : public Person {
+public:
+    // Student constructor must call the Person constructor
+    Student(string nme, int nicn) : Person(nme, nicn) {}
+
+    // Must implement the pure virtual function to be a concrete class
+    void sayPerson() override {
+        cout << "I am a student." << endl;
+    }
+};
+
+// Required main function
+int main() {
+    // Create an object of the Student class
+    Student studentObj("Kamal", 12345);
+
+    // Call the printPerson function (inherited from Person)
+    studentObj.printPerson();
+
+    return 0;
+}
+</code></pre>
+                </div>
+            </div>
+        </article>
+
+        <article id="q3b">
+            <h3>3 (b) - Output of the program from 3(a)</h3>
+            <div class="question-box">Write down the output when you run the program in Question 3(a) with the `main` function that you wrote.</div>
+            <div class="answer-box">
+                <p>The `main` function creates a `Student` object with the name "Kamal" and NIC `12345`. The `printPerson` function is then called, which prints the name and NIC on separate lines.</p>
+                <h4>Final Output</h4>
+                <div class="output-box"><pre>Kamal
+12345</pre></div>
+            </div>
+        </article>
+
+        <article id="q3c_d_e">
+            <h3>3 (c, d, e) - Concepts of `friend` and `operator overloading`</h3>
+            <div class="question-box">
+                (c) Describe operator overloading.<br>
+                (d) Describe the concept of `friend`.<br>
+                (e) Describe the impact of `friend` towards encapsulation.
+            </div>
+            <div class="answer-box">
+                <h4>(c) Operator Overloading</h4>
+                <p>Operator overloading is a feature in C++ that allows programmers to provide a custom meaning for an operator (like `+`, `-`, `<<`, `==`) for a user-defined type (a class or struct). It allows objects of a class to be used with operators in an intuitive way, similar to built-in types. For example, you can overload the `+` operator for a `ComplexNumber` class to perform complex number addition.</p>
+
+                <h4>(d) The `friend` Concept</h4>
+                <p>The `friend` keyword in C++ is a mechanism to grant special access rights. A non-member function or another class can be declared as a `friend` of a class. This declaration gives the friend function or friend class access to the `private` and `protected` members of the class that granted the friendship.</p>
+
+                <h4>(e) Impact of `friend` on Encapsulation</h4>
+                <p>The `friend` keyword intentionally **breaks encapsulation**. Encapsulation is the principle of hiding data and exposing only public methods to interact with it. By declaring a friend, a class creates a "back door" that allows an external entity to bypass this protection and directly access its internal state. While this is sometimes necessary for efficiency or for closely related classes (like iterators), it weakens the data hiding principle and should be used with caution.</p>
+            </div>
+        </article>
+
+        <article id="q3f">
+            <h3>3 (f) - Compare and contrast Abstraction and Encapsulation</h3>
+            <div class="question-box">Compare and contrast the concepts of abstraction and encapsulation.</div>
+            <div class="answer-box">
+                <p>Abstraction and Encapsulation are two fundamental, closely related but distinct principles of OOP.</p>
+                <table>
+                    <thead><tr><th>Feature</th><th>Abstraction</th><th>Encapsulation</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>Focus</strong></td><td>Hiding complexity and showing only essential features (the "what"). It is an **external** view.</td><td>Bundling data and methods together and restricting access (the "how"). It is an **internal** view.</td></tr>
+                    <tr><td><strong>Purpose</strong></td><td>To simplify a complex system for the user/client code.</td><td>To protect an object's internal state and ensure data integrity.</td></tr>
+                    <tr><td><strong>Implementation</strong></td><td>Achieved using abstract classes, pure virtual functions, and interfaces.</td><td>Achieved using access specifiers (`private`, `protected`, `public`).</td></tr>
+                    <tr><td><strong>Analogy</strong></td><td>A car's dashboard and controls (steering wheel, pedals).</td><td>The car's locked engine bay that bundles the engine and its components, preventing direct access.</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>Contrast:</strong> In essence, **Abstraction** is about managing complexity at the design level, while **Encapsulation** is the language-level mechanism that helps implement that design. You use encapsulation (making details `private`) to achieve abstraction (hiding those details from the user).</p>
+            </div>
+        </article>
+    </section>
+
+    <!-- ======================= QUESTION 4 ======================= -->
+    <section id="q4">
+        <h2 style="margin-top: 60px;">Question 4</h2>
+
+        <article id="q4a">
+            <h3>4 (a) - "extend" relationship in UML use case diagrams</h3>
+            <div class="question-box">Explain the situations where you can use the "extend" relationship in UML use case diagrams.</div>
+            <div class="answer-box">
+                <p>In a UML use case diagram, the **"extend"** relationship is used to model **optional** or exceptional functionality. It specifies that one use case (the extending use case) may, under certain conditions, add behavior to another use case (the extended use case).</p>
+                <p>You use "extend" in these situations:</p>
+                <ol>
+                    <li><strong>Optional Functionality:</strong> When a piece of functionality is not always executed as part of the base use case. For example, a "Place Order" use case could be extended by a "Apply Discount Code" use case. Applying a discount is optional.</li>
+                    <li><strong>Exceptional or Alternative Flows:</strong> When a specific condition triggers an alternative path. For example, a "Login" use case could be extended by a "Forgot Password" use case, which only runs if the user fails to log in and clicks the corresponding link.</li>
+                </ol>
+                <p>The key idea is that the base use case is complete and can stand on its own without the extending use case.</p>
+            </div>
+        </article>
+
+        <article id="q4b">
+            <h3>4 (b) - Output of char array access</h3>
+            <div class="question-box">Write down the output of the following program.</div>
+            <div class="answer-box">
+                <p>A C-style string is an array of characters ending with a null terminator `\0`. Indices start at 0.</p>
+                <div class="code-block">
+<pre><code>char title[] = "Titanic";
+// Memory: ['T', 'i', 't', 'a', 'n', 'i', 'c', '\0']
+// Index:    0    1    2    3    4    5    6    7
+
+cout << title[1]; // Prints the character at index 1, which is 'i'.
+cout << title[4]; // Prints the character at index 4, which is 'n'.
+</code></pre>
+                </div>
+                <h4>Final Output</h4>
+                <div class="output-box"><pre>in</pre></div>
+            </div>
+        </article>
+
+        <article id="q4c">
+            <h3>4 (c) - C++ code for a class diagram</h3>
+            <div class="question-box">Write down the syntactically correct C++ code for the following class diagram.</div>
+            <div class="answer-box">
+                <p>The diagram shows a `User` class and a `Student` class that inherits from `User`. The symbols indicate access specifiers: `-` is `private`, `#` is `protected`, and `+` is `public`.</p>
+                <h4>Solution Code</h4>
+                <div class="code-block">
+<pre><code>#include &lt;string&gt;
+using namespace std;
+
+class User {
+private:
+    string name;
+    int id;
+protected:
+    void setid();
+    void setname();
+public:
+    int getid();
+    string getname();
+};
+
+class Student : public User {
+private:
+    int year;
+protected:
+    int SGPA;
+public:
+    void setyear();
+    void setsgpa();
+    // The diagram incorrectly shows getid() in Student. It's inherited.
+    // However, if we must implement it as shown:
+    int getid(); // This would hide the base class getid(), not override.
+    int getsgpa();
+};
+</code></pre>
+                </div>
+        </article>
+
+        <article id="q4d">
+            <h3>4 (d) - Draw an activity diagram</h3>
+            <div class="question-box">Draw the activity diagram for the following code segment.</div>
+            <div class="answer-box">
+                <p>The code segment has a complex `if` condition and nested `for` loops.</p>
+                <div class="diagram-box">
+                    <h4>Activity Diagram</h4>
+                    <svg width="400" height="600" xmlns="http://www.w3.org/2000/svg">
+                        <style>
+                            .activity-start { fill: black; }
+                            .activity-end { fill: black; stroke: white; stroke-width: 3; }
+                            .action { rx: 10; fill: #e3f2fd; stroke: #1565c0; }
+                            .decision { fill: #fff3e0; stroke: #ef6c00; }
+                            .arrow { stroke: black; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+                        </style>
+                        <defs><marker id="arrowhead" viewBox="0 -5 10 10" refX="5" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5"></path></marker></defs>
+
+                        <circle cx="200" cy="30" r="10" class="activity-start"/>
+                        <path d="M200,40 V 70" class="arrow"/>
+                        <rect x="100" y="70" width="200" height="40" class="action"/><text x="200" y="95" text-anchor="middle">i = 10; j = 20;</text>
+                        <path d="M200,110 V 140" class="arrow"/>
+                        <path d="M150,180 L200,140 L250,180 L200,220 Z" class="decision"/>
+                        <text x="200" y="185" text-anchor="middle">i &lt; 20 && i > 5 || j > 5</text>
+
+                        <path d="M250,180 H 350 V 250" class="arrow"/><text x="280" y="175">[false]</text>
+                        <path d="M200,220 V 250" class="arrow"/><text x="210" y="240">[true]</text>
+
+                        <rect x="100" y="250" width="200" height="40" class="action"/><text x="200" y="275" text-anchor="middle">for (k = i; k > 0; k--)</text>
+                        <path d="M200,290 V 320" class="arrow"/>
+                        <rect x="100" y="320" width="200" height="40" class="action"/><text x="200" y="345" text-anchor="middle">for (l = j; l < 30; l++)</text>
+                        <path d="M200,360 V 390" class="arrow"/>
+                        <rect x="100" y="390" width="200" height="40" class="action"/><text x="200" y="415" text-anchor="middle">cout << l << endl;</text>
+
+                        <path d="M100,410 V 340 H 100" class="arrow"/>
+                        <path d="M100,270 V 200 H 100" class="arrow"/>
+
+                        <circle cx="350" cy="550" r="12" class="activity-end"/>
+                        <circle cx="350" cy="550" r="8" fill="white" stroke="black" stroke-width="1.5"/>
+
+                        <path d="M300,410 H 350 V 538" class="arrow"/>
+                        <path d="M350,250 V 538" class="arrow"/>
+                    </svg>
+                </div>
+            </div>
+        </article>
+
+        <article id="q4e_f">
+            <h3>4 (e, f) - Code output and implementation</h3>
+            <div class="question-box">
+                (e) Considering the code in 4(d), write down the output.<br>
+                (f) Write down the C++ code for the following diagram (flowchart).
+            </div>
+            <div class="answer-box">
+                <h4>(e) Output of code segment in 4(d)</h4>
+                <p>The `if` condition is `(10 < 20 && 10 > 5 || 20 > 5)`. This simplifies to `(true && true || true)`, which is `true`. The loops will execute.</p>
+                <ul>
+                    <li>The outer `k` loop runs from 10 down to 1.</li>
+                    <li>For each of those 10 iterations, the inner `l` loop runs. `j` is 20, so `l` goes from 20 to 29.</li>
+                    <li>The inner loop `cout << l << endl;` will print the numbers 20 through 29, each on a new line.</li>
+                    <li>This sequence will repeat 10 times (for each value of `k`).</li>
+                </ul>
+                <p>The output will be the numbers 20 to 29 printed vertically, and this entire block of 10 numbers will be repeated 10 times.</p>
+
+                <h4>(f) C++ Code for Flowchart</h4>
+                <p>The flowchart describes a loop that modifies a variable `a`.</p>
+                <div class="code-block">
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a = 5;
+    while (a > 0) {
+        if (a == 2) {
+            cout << 2 << endl;
+        } else if (a == 4) {
+            cout << 4 << endl;
+        } else {
+            cout << 6 << endl;
+        }
+        a = a + 1;
+        // This creates an infinite loop as 'a' will never be <= 0.
+        // Assuming the arrow from a=a+1 should point back to the a>0 check.
+    }
+    // "exit"
+    return 0;
+}
+</code></pre>
+                    <div class="key-concepts-box"><h4>Note on the flowchart</h4>The flowchart as drawn contains a logical flaw. If `a` starts at 5 and is always incremented, the condition `a > 0` will never be false, leading to an infinite loop. The code above is a direct translation.</div>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- ======================= QUESTION 5 ======================= -->
+    <section id="q5">
+        <h2 style="margin-top: 60px;">Question 5</h2>
+
+        <article id="q5a">
+            <h3>5 (a) - Describe Polymorphism</h3>
+            <div class="question-box">Describe the concept of polymorphism with examples.</div>
+            <div class="answer-box">
+                <p>Polymorphism means "many forms". It's a core OOP principle that allows objects of different classes to be treated as objects of a common base class. The most powerful form is **run-time polymorphism**, achieved through `virtual` functions and inheritance.</p>
+                <p>It allows a single interface (a base class pointer) to represent different underlying forms (derived class objects). The same function call (`ptr->doAction()`) can execute different code depending on the actual type of the object `ptr` is pointing to at that moment.</p>
+                <h4>Example</h4>
+                <div class="code-block"><pre><code>class Shape { public: virtual void draw() = 0; };
+class Circle : public Shape { public: void draw() override { cout << "Draw Circle"; } };
+class Square : public Shape { public: void draw() override { cout << "Draw Square"; } };
+
+void drawAnyShape(Shape* s) {
+    s->draw(); // This one line can draw a Circle or a Square
+}
+</code></pre></div>
+            </div>
+        </article>
+
+        <article id="q5b">
+            <h3>5 (b) - Output of a program with static members</h3>
+            <div class="question-box">Write down the output of the following program.</div>
+            <div class="answer-box">
+                <div class="key-concepts-box">
+                    <h4><i class="fa-solid fa-brain"></i> Key Concepts</h4>
+                    <ul>
+                        <li><strong>`static` member variable:</strong> Belongs to the class, not an object. All objects share one instance.</li>
+                        <li><strong>Instance member variable:</strong> Each object gets its own private copy.</li>
+                    </ul>
+                </div>
+                <h4>Execution Trace</h4>
+                <div class="code-block"><pre><code>// static int a is shared. A::a is 0 initially.
+A f1, f2; // Two objects created. f1.b and f2.b are separate.
+
+f1.setA(1); // The one shared 'a' becomes 1.
+f1.setB(3); // f1's private 'b' becomes 3.
+
+f2.setA(2); // The one shared 'a' is now overwritten and becomes 2.
+f2.setB(4); // f2's private 'b' becomes 4.
+
+f1.printVal();
+// Prints shared 'a', which is now 2.
+// Prints f1's private 'b', which is 3.
+
+f2.printVal();
+// Prints shared 'a', which is still 2.
+// Prints f2's private 'b', which is 4.
+</code></pre></div>
+                <h4>Final Output</h4>
+                <div class="output-box"><pre>2
+3
+2
+4</pre></div>
+            </div>
+        </article>
+
+        <article id="q5c">
+            <h3>5 (c) - Differences between global and local variables</h3>
+            <div class="question-box">Describe the differences between global variables and local variables in C++.</div>
+            <div class="answer-box">
+                <table>
+                    <thead><tr><th>Feature</th><th>Global Variable</th><th>Local Variable</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>Scope</strong></td><td>Visible to all functions in the file from the point of declaration.</td><td>Visible only within the function or block (`{}`) where it is declared.</td></tr>
+                    <tr><td><strong>Lifetime</strong></td><td>Exists for the entire duration of the program's execution.</td><td>Created when the function/block is entered and destroyed when it is exited.</td></tr>
+                    <tr><td><strong>Default Value</strong></td><td>Automatically initialized to zero (or its equivalent) if not explicitly initialized.</td><td>Not initialized by default. Contains a garbage value if not explicitly initialized.</td></tr>
+                    <tr><td><strong>Usage</strong></td><td>Should be used sparingly as they can make code hard to debug and maintain due to potential modification from anywhere.</td><td>Preferred for most tasks as they limit scope and prevent unintended side effects.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+
+        <article id="q5d">
+            <h3>5 (d) - Describe the three types of inheritance</h3>
+            <div class="question-box">Describe the three (03) types of inheritance.</div>
+            <div class="answer-box">
+                <ol>
+                    <li>
+                        <strong>Single Inheritance:</strong> This is the simplest form, where a derived class inherits from only **one** base class. It represents a straightforward "is-a" relationship (e.g., a `Car` is a `Vehicle`).
+                    </li>
+                    <li>
+                        <strong>Multiple Inheritance:</strong> A derived class inherits from **two or more** base classes simultaneously. This allows the derived class to combine the features of all its parents (e.g., a `FlyingCar` could inherit from both `Car` and `Airplane`).
+                    </li>
+                    <li>
+                        <strong>Multilevel Inheritance:</strong> A derived class is created from another derived class, forming a chain of inheritance (e.g., `Animal` -> `Mammal` -> `Dog`). The final class in the chain inherits properties from all its ancestors.
+                    </li>
+                </ol>
+            </div>
+        </article>
+
+        <article id="q5e">
+            <h3>5 (e) - Output of a program with struct and pointers</h3>
+            <div class="question-box">Write down the output of the following program.</div>
+            <div class="answer-box">
+                <h4>Execution Trace</h4>
+                <div class="code-block"><pre><code>book book1;
+book1.bookID = 152912;
+int i = 40;
+book1.numOfCopies = &i; // The pointer 'numOfCopies' now holds the address of 'i'.
+
+cout << book1.bookID << endl;      // Prints the value of bookID: 152912
+cout << *book1.numOfCopies;      // Dereferences the pointer, printing the value of 'i': 40
+</code></pre></div>
+                <h4>Final Output</h4>
+                <div class="output-box"><pre>152912
+40</pre></div>
+            </div>
+        </article>
+
+    </section>
+
+</main>
+
+<script src="js/script.js"></script>
+</body>
+</html>

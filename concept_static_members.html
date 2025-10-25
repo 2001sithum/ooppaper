@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concept: Static Members</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<nav class="sidebar">
+    <!-- Sidebar content from index.html -->
+    <div class="sidebar-header"><h2>OOP Concepts</h2></div>
+    <ul class="sidebar-nav">
+        <li class="main-question"><a href="index.html">Home</a></li>
+        <li class="main-question"><a href="concept_inheritance.html">Inheritance</a></li>
+        <li class="main-question"><a href="concept_polymorphism.html">Polymorphism</a></li>
+        <li class="main-question"><a href="concept_encapsulation.html">Encapsulation</a></li>
+        <li class="main-question"><a href="concept_abstraction.html">Abstraction</a></li>
+        <li class="main-question"><a href="concept_static_members.html">Static Members</a></li>
+        <li class="main-question"><a href="concept_pointers_references.html">Pointers vs References</a></li>
+        <li class="main-question"><a href="Exam_Nov_2023_Solved.html">Exam_Nov_2023_Solved</a></li>
+
+    </ul>
+</nav>
+<main class="main-content">
+    <h1>Concept: Static Members (ස්ථිතික සාමාජිකයන්)</h1>
+
+    <article>
+        <div class="answer-box">
+            <!-- Beginner Level -->
+            <h3><i class="fa-solid fa-seedling"></i> Beginner Level: What are Static Members?</h3>
+            <p><strong>English:</strong> A `static` member (variable or function) belongs to the **class itself**, not to any individual object. This means all objects of the class share the exact same `static` variable.</p>
+            <p><strong>Sinhala (සිංහල):</strong> `static` member එකක් (variable එකක් හෝ function එකක්) අයිති වෙන්නේ class එකටමයි. class එකෙන් හදන කිසිම object එකකට වෙන වෙනම අයිති වෙන්නේ නෑ. ඒ කියන්නේ, ඒ class එකේ හැම object එකක්ම share (බෙදාගන්නේ) කරගන්නේ එකම `static` variable එක.</p>
+
+            <h4>Real-World Scenario</h4>
+            <p><strong>English:</strong> Imagine a `Player` class in a game. Each player object will have its own `score` and `name` (these are instance variables). But we might want to keep track of the `totalPlayers` in the game. This `totalPlayers` count doesn't belong to any single player; it belongs to the `Player` concept as a whole. So, `totalPlayers` would be a `static` variable.</p>
+            <p><strong>Sinhala (සිංහල):</strong> Game එකක `Player` class එකක් ගැන හිතන්න. හැම player object එකකටම එයාගේම `score` එකක් සහ `name` එකක් තියෙනවා (මේවා සාමාන්‍ය variables). ඒත්, game එකේ ඉන්න මුලු `totalPlayers` ගාන අපිට දැනගන්න ඕන වෙන්න පුලුවන්. මේ `totalPlayers` ගාන එක player කෙනෙක්ට අයිති නෑ. ඒක `Player` කියන class එකටම පොදු දෙයක්. ඒ නිසා, `totalPlayers` කියන්නේ `static` variable එකක්.</p>
+
+            <hr style="margin: 20px 0;">
+
+            <!-- Intermediate Level -->
+            <h3><i class="fa-solid fa-graduation-cap"></i> Intermediate Level: Properties and Syntax</h3>
+            <h4>Static Variables</h4>
+            <ul>
+                <li><strong>Shared Data:</strong> One copy exists for the entire class, regardless of how many objects are created.</li>
+                <li><strong>Initialization:</strong> Must be defined and initialized *outside* the class definition, in the global scope.</li>
+                <li><strong>Lifetime:</strong> Exists for the entire duration of the program.</li>
+            </ul>
+            <h4>Static Functions</h4>
+            <ul>
+                <li><strong>Class-level Access:</strong> Can be called directly using the class name (`ClassName::functionName()`) without needing an object.</li>
+                <li><strong>Restrictions:</strong> A static function can *only* access other `static` members (variables or functions) of the class. It cannot access non-static (instance) members because it doesn't have a `this` pointer (it's not associated with any object).</li>
+            </ul>
+
+            <h4>Sample Code 1: Tracking Object Count</h4>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-keyword">using namespace</span> std;
+
+<span class="code-keyword">class</span> Thing {
+<span class="code-keyword">private</span>:
+    <span class="code-keyword">static</span> <span class="code-type">int</span> objectCount; <span class="code-comment">// Declaration</span>
+<span class="code-keyword">public</span>:
+    Thing() { objectCount++; }
+    ~Thing() { objectCount--; }
+    <span class="code-keyword">static</span> <span class="code-type">int</span> getObjectCount() { <span class="code-keyword">return</span> objectCount; }
+};
+
+<span class="code-comment">// CRITICAL STEP: Definition and initialization</span>
+<span class="code-type">int</span> Thing::objectCount = <span class="code-number">0</span>;
+
+<span class="code-keyword">int</span> main() {
+    cout &lt;&lt; <span class="code-string">"Initial count: "</span> &lt;&lt; Thing::getObjectCount() &lt;&lt; endl;
+    Thing t1, t2;
+    cout &lt;&lt; <span class="code-string">"Count after creating t1, t2: "</span> &lt;&lt; Thing::getObjectCount() &lt;&lt; endl;
+    {
+        Thing t3;
+        cout &lt;&lt; <span class="code-string">"Count with t3 in scope: "</span> &lt;&lt; Thing::getObjectCount() &lt;&lt; endl;
+    } <span class="code-comment">// t3 destroyed here</span>
+    cout &lt;&lt; <span class="code-string">"Count after t3 is destroyed: "</span> &lt;&lt; Thing::getObjectCount() &lt;&lt; endl;
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+            </div>
+
+            <hr style="margin: 20px 0;">
+
+            <h4>Sample Code 2: Utility Functions and Static Constants</h4>
+            <p>Another common use for `static` members is to group related utility functions and constants into a class that acts like a namespace. You never need to create an object of this class; you just use its members directly.</p>
+            <div class="code-block">
+                <div class="code-header"><span>C++</span><button class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                <pre><code><span class="code-preprocessor">#include &lt;iostream&gt;</span>
+<span class="code-preprocessor">#include &lt;cmath&gt;</span> <span class="code-comment">// For M_PI on some compilers</span>
+
+<span class="code-keyword">class</span> MathUtils {
+<span class="code-keyword">public</span>:
+    <span class="code-comment">// A static constant member. C++17 allows 'inline' to initialize it here.</span>
+    <span class="code-keyword">inline static const double</span> PI = <span class="code-number">3.1415926535</span>;
+
+    <span class="code-comment">// A static utility function. It doesn't depend on any object's state.</span>
+    <span class="code-keyword">static</span> <span class="code-type">int</span> max(<span class="code-type">int</span> a, <span class="code-type">int</span> b) {
+        <span class="code-keyword">return</span> (a > b) ? a : b;
+    }
+
+    <span class="code-keyword">static</span> <span class="code-type">double</span> circleArea(<span class="code-type">double</span> radius) {
+        <span class="code-comment">// It can access other static members of the same class.</span>
+        <span class="code-keyword">return</span> PI * radius * radius;
+    }
+};
+
+<span class="code-keyword">int</span> main() {
+    <span class="code-comment">// No object of MathUtils is created. We call static members directly.</span>
+    cout &lt;&lt; <span class="code-string">"The value of PI is: "</span> &lt;&lt; MathUtils::PI &lt;&lt; endl;
+
+    cout &lt;&lt; <span class="code-string">"The max of 10 and 20 is: "</span> &lt;&lt; MathUtils::max(<span class="code-number">10</span>, <span class="code-number">20</span>) &lt;&lt; endl;
+
+    cout &lt;&lt; <span class="code-string">"Area of a circle with radius 5: "</span> &lt;&lt; MathUtils::circleArea(<span class="code-number">5.0</span>) &lt;&lt; endl;
+
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+            </div>
+
+            <hr style="margin: 20px 0;">
+
+            <!-- Advanced Level -->
+            <h3><i class="fa-solid fa-rocket"></i> Advanced Level: Use Cases and Best Practices</h3>
+            <ul>
+                <li><strong>Utility Classes:</strong> As shown in Sample Code 2, `static` is perfect for creating utility or helper classes that group related functions (e.g., `MathUtils`, `StringUtils`, `FileUtils`).</li>
+                <li><strong>Singleton Pattern:</strong> A design pattern that ensures a class has only one instance and provides a global point of access to it. This is often implemented using a private static instance variable and a public static getter method.</li>
+                <li><strong>Global Configuration:</strong> Storing configuration values that are common to all objects of a class. For example, a `DBConnection` class might have a static string for the database host.</li>
+                <li><strong>In-class Initialization:</strong> Since C++17, `inline static` members can be initialized directly inside the class declaration, which simplifies the syntax for constants and avoids the need for a separate definition in the `.cpp` file.</li>
+            </ul>
+        </div>
+    </article>
+</main>
+<script src="js/script.js"></script>
+</body>
+</html>
