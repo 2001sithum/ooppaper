@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reliable HTML to PDF with Smart Page Breaks</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --light-gray: #f0f2f5;
+            --border-color: #ddd;
+            --page-bg: #e9ecef;
+            --a4-aspect-ratio: 1.414; /* sqrt(2) */
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; background-color: var(--light-gray); }
+        .main-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
+        header { text-align: center; padding: 20px; border-bottom: 1px solid var(--border-color); background-color: white; }
+        h1 { color: var(--primary-color); margin: 0 0 5px 0; }
+        .container { display: flex; flex-grow: 1; gap: 20px; padding: 20px; max-width: 1600px; margin: 0 auto; box-sizing: border-box; }
+        .editor, .preview-wrapper { flex: 1; display: flex; flex-direction: column; background-color: white; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 0; }
+        @media (max-width: 1000px) {
+            .container { flex-direction: column; }
+            .editor, .preview-wrapper { min-height: 70vh; }
+        }
+        h2 { margin: 0; padding: 15px 20px; font-size: 1.1em; color: #555; border-bottom: 1px solid #eee; }
+        textarea { flex-grow: 1; border: none; padding: 15px; font-family: "Courier New", monospace; font-size: 14px; resize: none; outline: none; border-radius: 0 0 8px 8px; }
+        .preview-wrapper { background-color: var(--page-bg); }
+        #preview-container { flex-grow: 1; overflow-y: auto; padding: 30px; }
+        
+        /* --- NEW PREVIEW STYLES --- */
+        #preview-area {
+            position: relative; /* For positioning break markers */
+            background-color: white;
+            width: 210mm;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        }
+        #preview-content {
+            padding: 20mm;
+            box-sizing: border-box;
+        }
+        #preview-content img, #preview-content table, #preview-content figure {
+            page-break-inside: avoid; /* This is a flag for our JS, not for CSS rendering */
+        }
+        .page-break-marker {
+            position: absolute;
+            left: -20px;
+            right: -20px;
+            border-top: 2px dashed #ff6b6b;
+            text-align: center;
+        }
+        .page-break-marker::after {
+            content: 'Page ' attr(data-page);
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff6b6b;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        /* --- END NEW STYLES --- */
+
+        footer { text-align: center; padding: 20px; background-color: white; border-top: 1px solid var(--border-color); }
+        button { padding: 12px 25px; font-size: 16px; font-weight: bold; color: white; background-color: var(--primary-color); border: none; border-radius: 8px; cursor: pointer; position: relative; min-width: 240px; min-height: 45px; transition: background-color 0.3s; }
+        button:hover:not(:disabled) { background-color: #0b5ed7; }
+        button:disabled { background-color: #6c757d; cursor: not-allowed; }
+        button .spinner { display: none; }
+        button.loading .button-text { visibility: hidden; }
+        button.loading .spinner { display: inline-block; position: absolute; width: 20px; height: 20px; top: 0; left: 0; right: 0; bottom: 0; margin: auto; border: 4px solid rgba(255,255,255,0.3); border-top-color: #ffffff; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+<div class="main-wrapper">
+    <header>
+        <h1>Reliable HTML to PDF Converter</h1>
+        <p>Features visual page-break markers and prevents images from being cut in half.</p>
+    </header>
+
+    <div class="container">
+        <div class="editor">
+            <h2>HTML Input</h2>
+            <textarea id="htmlInput"></textarea>
+        </div>
+        <div class="preview-wrapper">
+            <h2>Live Preview</h2>
+            <div id="preview-container">
+                <div id="preview-area">
+                    <div id="page-break-markers"></div>
+                    <div id="preview-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <button id="convertBtn">
+            <span class="button-text">Download PDF</span>
+            <span class="spinner"></span>
+        </button>
+    </footer>
+</div>
+    <script>
+        const { jsPDF } = window.jspdf;
+
+        const htmlInput = document.getElementById('htmlInput');
+        const previewContent = document.getElementById('preview-content');
+        const breakMarkersContainer = document.getElementById('page-break-markers');
+        const convertBtn = document.getElementById('convertBtn');
+        const buttonText = convertBtn.querySelector('.button-text');
+        
+        const defaultHtml = `<h1>Smart Page Break Demo</h1>
+<p>This content fills up the first page. The following image is intentionally placed where it would normally be cut by the page break.</p>
+<p>Because of the smart break logic, the dashed "Page 2" line will move up, and the entire image will be pushed to the next page in the final PDF.</p>
+<img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800" alt="Laptop" style="max-width: 100%; display: block; margin: 200px auto 20px auto;">
+<h3>Content on Page 2</h3>
+<p>This paragraph and the image above will appear together on the second page of the PDF.</p>`;
+        
+        htmlInput.value = defaultHtml;
+
+        // --- CORE LOGIC: UPDATE PREVIEW AND CALCULATE BREAKS ---
+        function updatePreviewAndBreaks() {
+            previewContent.innerHTML = htmlInput.value;
+            breakMarkersContainer.innerHTML = ''; // Clear old markers
+
+            const contentWidth = previewContent.clientWidth;
+            const pageHeightInPixels = contentWidth * 1.414; // A4 Aspect Ratio
+            const totalHeight = previewContent.scrollHeight;
+            
+            let currentBreak = pageHeightInPixels;
+            let pageNum = 2;
+
+            while (currentBreak < totalHeight) {
+                // Find all elements that should not be broken
+                const avoidBreakElements = previewContent.querySelectorAll('[style*="page-break-inside: avoid"]');
+                let adjustedBreak = currentBreak;
+
+                // Check if the break line intersects with an "avoid-break" element
+                for (const el of avoidBreakElements) {
+                    const elTop = el.offsetTop;
+                    const elBottom = elTop + el.offsetHeight;
+
+                    if (elTop < currentBreak && elBottom > currentBreak) {
+                        // The element is cut. Move the break to the top of this element.
+                        adjustedBreak = elTop;
+                        break; // Stop after finding the first intersected element
+                    }
+                }
+
+                // Create and place the visual marker
+                const marker = document.createElement('div');
+                marker.className = 'page-break-marker';
+                marker.style.top = `${adjustedBreak}px`;
+                marker.setAttribute('data-page', pageNum);
+                breakMarkersContainer.appendChild(marker);
+
+                currentBreak = adjustedBreak + pageHeightInPixels;
+                pageNum++;
+            }
+        }
+
+        // --- RELIABLE IMAGE CONVERSION ---
+        async function convertImagesToBase64(container) {
+            const images = Array.from(container.getElementsByTagName('img'));
+            if (images.length === 0) return;
+
+            buttonText.textContent = `Processing ${images.length} images...`;
+            const promises = images.map(async (img) => {
+                if (img.src.startsWith('data:image')) return;
+                try {
+                    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(img.src)}`;
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) throw new Error(`Fetch failed: ${response.statusText}`);
+                    const blob = await response.blob();
+                    return new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => { img.src = reader.result; resolve(); };
+                        reader.onerror = reject;
+                        reader.readAsDataURL(blob);
+                    });
+                } catch (error) {
+                    console.warn(`Could not convert image ${img.src}:`, error);
+                }
+            });
+            await Promise.all(promises);
+        }
+
+        // --- PDF GENERATION (ROBUST SINGLE CANVAS METHOD) ---
+        convertBtn.addEventListener('click', async () => {
+            convertBtn.classList.add('loading');
+            convertBtn.disabled = true;
+
+            try {
+                // Step 1: Process images to prevent CORS errors
+                await convertImagesToBase64(previewContent);
+                buttonText.textContent = 'Generating PDF...';
+
+                // Step 2: Generate a single, high-quality canvas of the entire content
+                const canvas = await html2canvas(previewContent, { scale: 2, useCORS: true });
+                
+                const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const canvasHeight = canvas.height * pdfWidth / canvas.width;
+
+                let heightLeft = canvasHeight;
+                let position = 0;
+
+                // Step 3: Add the first page
+                pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, canvasHeight);
+                heightLeft -= pdfHeight;
+
+                // Step 4: Add subsequent pages, slicing the single canvas
+                while (heightLeft > 0) {
+                    position -= pdfHeight;
+                    pdf.addPage();
+                    pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, canvasHeight);
+                    heightLeft -= pdfHeight;
+                }
+                pdf.save('document.pdf');
+
+            } catch (error) {
+                console.error("PDF generation failed:", error);
+                alert("Could not generate PDF. Check the console for details.");
+            } finally {
+                buttonText.textContent = 'Download PDF';
+                convertBtn.classList.remove('loading');
+                convertBtn.disabled = false;
+                // Important: Refresh preview to restore original image URLs and recalculate breaks
+                updatePreviewAndBreaks();
+            }
+        });
+
+        // Event Listeners
+        htmlInput.addEventListener('input', updatePreviewAndBreaks);
+        // Use a ResizeObserver to recalculate breaks if window size changes
+        new ResizeObserver(updatePreviewAndBreaks).observe(previewContent);
+        // Initial render
+        updatePreviewAndBreaks();
+    </script>
+</body>
+</html>
